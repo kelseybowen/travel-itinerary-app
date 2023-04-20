@@ -1,5 +1,7 @@
 from flask_app import app
 from flask_cors import CORS
+from flask_app.controllers import routes
+
 
 api_cors_config = {
     "origins": ["http://localhost:3000"]
