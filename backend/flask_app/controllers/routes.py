@@ -6,15 +6,11 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
 
-#LOGIN PAGE 
-@app.route('/')
-def index():
-    return render_template('login.html')
-
-
 #REGISTER - VALIDATIONS IN USER MODEL 
 @app.route('/register/user', methods=['POST'])
 def register():
+    data = request.get_json()
+    pw_hash = bcrypt.generate_password_hash(data['password'])
     # if not User.validate_user(request.form):
     #     session['first_name'] = request.form['first_name']
     #     session['last_name'] = request.form['last_name']
@@ -22,62 +18,83 @@ def register():
     #     return redirect('/')
     # else:
     #     session.clear()
-    pw_hash = bcrypt.generate_password_hash(request.form['password'])
+    
     data = {
-        "first_name": request.form['first_name'],
-        "last_name": request.form['last_name'],
-        "email": request.form['email'],
+        "first_name": data['first_name'],
+        "last_name": data['last_name'],
+        "email": data['email'],
         "password": pw_hash,
-        "interests": request.form['interests']
+        "interests": data['interests']
         }
-    User.save_user(data)
-    # user_in_db = User.get_by_email(request.form)
-    # session['user_id'] = user_in_db.id
-    # session['first_name'] = user_in_db.first_name
-    # session['last_name'] = user_in_db.last_name
-    return redirect('/dashboard')
-
+    new_user_id = User.save_user(data)
+    result = User.get_user_by_id({'id': new_user_id})
+    session['user_id'] = result.id
+    session['first_name'] = result.first_name
+    session['interests'] = result.interests
+    response_data = {'success': True}
+    return jsonify(response_data)
+        
 
 
 #LOGIN - VALIDATIONS IN USER MODEL
 @app.route('/login/user', methods=['POST'])
 def login():
-    data = {
-        'email': request.form['email'],
-        'password': request.form['password'],
+    data = request.get_json()
+    login_data = {
+        'email': data['email'],
+        # 'password': data['password'],
     }
-    stuff = User.get_by_email(data)
-    # if not User.validate_login(request.form):
+    result = User.get_by_email(login_data)
+    # if not User.validate_login(stuff):
     #     return redirect('/')
+    # bcrypt.check_password_hash()
+    # data = {
+    #     "email": data['email'],
+    #     "password": pw_hash,
+    #     }
     
-    return redirect('/dashboard')
+    session['user_id'] = result.id
+    session['first_name'] = result.first_name
+    session['interests'] = result.interests
+    session['email'] = result.email
+    user = session['user_id']
+    response = {
+        'user': user,
+        'success': True
+        }
+    # response.headers.add('Access-Control-Allow-Origin', '*')
+    return jsonify(response)
 
 
 
 #HOME PAGE RENDER UPON SUCCESSFUL LOGIN 
-@app.route('/dashboard')
-def dashboard():
-    if 'user_id' not in session:
-        return redirect('/')
-    data = {
-        'email' : session['email']
+@app.route('/dashboard/<int:user_id>')
+def dashboard(user_id):
+    # if 'user_id' not in session:
+    #     return redirect('/')
+
+    data_dict = {
+        'user_id': user_id
     }
-    stuff = User.get_by_email(data)
-    stuff = [
-        {'id' : stuff.id},
-        {'first_name' : stuff.first_name} ,
-        {'last_name' : stuff.last_name},
-        {'email' : stuff.email},
-        {'interests' : stuff.interests},
-    ]
-    trip_data = {
-        'user_id' : 1,
-        'id' : 1,
-    }
-    trip_stuff = Trip.get_one_trip_with_places(trip_data)
+    all_trips = Trip.get_trips_by_user_id(data_dict)
     
-        
-    return render_template('dashboard.html', stuff=stuff, trip_stuff=trip_stuff)
+    trips = []
+
+    for trip in all_trips:
+        trip = {
+            'id': trip.id,
+            'user_id': trip.user_id,
+            'title': trip.title,
+            'city': trip.city,
+            'state': trip.state,
+            'country': trip.country,
+            'start_date': trip.start_date,
+            'end_date': trip.end_date,
+        }
+        trips.append(trip)
+    response = jsonify(trips)
+    # response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 

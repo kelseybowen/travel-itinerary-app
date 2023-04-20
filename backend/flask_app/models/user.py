@@ -47,6 +47,17 @@ class User:
             return False
         return cls(result[0])
     
+    @classmethod
+    def get_user_by_id(cls, data):
+        query = """
+                SELECT * FROM users
+                WHERE id = %(id)s
+                ;"""
+        result = connectToMySQL(cls.DB).query_db(query, data)
+        if len(result) < 1:
+            return False
+        return cls(result[0])
+    
     #GET USERS INFO FROM ID 
     @classmethod
     def get_by_id(cls, data):
@@ -63,7 +74,7 @@ class User:
     def update_user(cls, data):
         query = """
                 UPDATE users
-                SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s, password = password, interests = %(intrests)s, updated_at = NOW()
+                SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s, password = password, interests = %(interests)s, updated_at = NOW()
                 WHERE id = %(id)s
                 ;"""
         results = connectToMySQL(cls.DB).query_db(query, data)

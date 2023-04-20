@@ -33,33 +33,33 @@ class Trip:
                 ;"""
         return connectToMySQL(cls.DB).query_db(query, data)
     
-    
     #ACCESS ALL TRIPS WITH USER'S NAME
     @classmethod
     def get_trips_by_user_id(cls, data):
         query = """SELECT * 
                 FROM trips
-                LEFT JOIN users
-                ON trips.user_id = %(user_id)s
+                JOIN users
+                ON trips.user_id = users.id
+                WHERE users.id = %(user_id)s
                 ORDER BY trips.id DESC
                 ;"""
         results = connectToMySQL(cls.DB).query_db(query, data)
-        # trips = []
-        # for row in results:
-        #     trip = cls(row)
-        #     user_data = {
-        #         'id': row["users.id"],
-        #         'first_name': row["first_name"],
-        #         'last_name' : row["last_name"],
-        #         'email' : row["email"],
-        #         'password' : '',
-        #         'interests' : row["interests"],
-        #         'created_at' : row["created_at"],
-        #         'updated_at' : row["updated_at"], 
-        #         }
-        #     trip.user_name = user.User(user_data)
-        #     trips.append(trip)
-        return results
+        trips = []
+        for row in results:
+            trip = cls(row)
+            user_data = {
+                'id': row["users.id"],
+                'first_name': row["first_name"],
+                'last_name' : row["last_name"],
+                'email' : row["email"],
+                'password' : '',
+                'interests' : row["interests"],
+                'created_at' : row["created_at"],
+                'updated_at' : row["updated_at"], 
+                }
+            trip.user_name = user.User(user_data)
+            trips.append(trip)
+        return trips
     
     
     @classmethod
