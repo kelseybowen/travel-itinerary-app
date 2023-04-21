@@ -21,7 +21,7 @@ const LoginReg = () => {
                 console.log(res.data)
                 console.log(res)
                 if (res.data.success) {
-                    window.location.href="/dashboard"
+                    window.location.href=("/dashboard/" + res.data.user)
                 }
             })
             .catch(err => console.log(err))

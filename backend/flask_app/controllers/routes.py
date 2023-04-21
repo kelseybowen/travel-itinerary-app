@@ -6,6 +6,10 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
 
+
+#--------------------------------------------- LOGIN/REG ROUTES -----------------------------------
+
+
 #REGISTER - VALIDATIONS IN USER MODEL 
 @app.route('/register/user', methods=['POST'])
 def register():
@@ -31,8 +35,12 @@ def register():
     session['user_id'] = result.id
     session['first_name'] = result.first_name
     session['interests'] = result.interests
-    response_data = {'success': True}
-    return jsonify(response_data)
+    user = session['user_id']
+    response = {
+        'user': user,
+        'success': True
+        }
+    return jsonify(response)
         
 
 
@@ -67,6 +75,15 @@ def login():
 
 
 
+#LOGOUT & CLEAR SESSION 
+@app.route('/logout')
+def logout_user():
+    session.clear()
+    return redirect('/')
+
+#--------------------------------------------- DASHBOARD/TRIP ROUTES -----------------------------------
+
+
 #HOME PAGE RENDER UPON SUCCESSFUL LOGIN 
 @app.route('/dashboard/<int:user_id>')
 def dashboard(user_id):
@@ -99,6 +116,11 @@ def dashboard(user_id):
 
 
 
+
+
+#--------------------------------------------------- USER/PROFILE ROUTES --------------------------------
+
+
 #UPDATE USER 
 @app.route('/update/user', methods=['POST'])
 def update_user():
@@ -112,18 +134,13 @@ def update_user():
 
 
 
-#LOGOUT & CLEAR SESSION 
-@app.route('/logout')
-def logout_user():
-    session.clear()
-    return redirect('/')
 
 
 
 # Login '/' if not -> '/register'
 
 
-# /dashboard - plan a trip and openAI
+# /dashboard/<int:user_id - plan a trip and openAI
 # dashboard/<int:trip_id> - open rest of dashboard. 
 
 

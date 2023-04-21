@@ -22,8 +22,13 @@ const Dashboard = () => {
                 tripData.map((trip, idx) => {
                     return (
                         <div key={idx}>
+                            <p>TRIP ID:{trip.id}</p>
                             <p>{trip.title}</p>
                             <p>{trip.city}</p>
+                            <p>{trip.state}</p>
+                            <p>{trip.country}</p>
+                            <p>{trip.start_date}</p>
+                            <p>{trip.end_date}</p>
                         </div>
                     )
                 })

@@ -20,7 +20,7 @@ class Place:
     def save_place(cls, data):
         query = """
                 INSERT INTO places 
-                ( trip_id,  name, address, notes, country, created_at, updated_at)
+                ( trip_id,  name, address, notes, created_at, updated_at)
                 VALUES 
                 ( %(trip_id)s, %(name)s, %(address)s, %(notes)s, NOW(), NOW() )
                 ;"""
