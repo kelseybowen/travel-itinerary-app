@@ -141,7 +141,7 @@ def update_user():
 
 
 # /dashboard/<int:user_id - plan a trip and openAI
-# dashboard/<int:trip_id> - open rest of dashboard. 
+# dashboard/<int:user_id>/<int:trip_id> - open rest of dashboard. 
 
 
 
