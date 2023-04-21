@@ -9,7 +9,6 @@ const LoginReg = () => {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [interests, setInterests] = useState("")
-
     const [loginEmail, setLoginEmail] = useState("")
     const [loginPassword, setLoginPassword] = useState("")
 
@@ -18,31 +17,27 @@ const LoginReg = () => {
         e.preventDefault();
         axios.post("http://localhost:5000/register/user", { first_name: firstName, last_name: lastName, email: email, password: password, interests: interests })
             .then((res) => {
-                console.log(res.data)
-                console.log(res)
                 if (res.data.success) {
                     window.location.href=("/dashboard/" + res.data.user)
                 }
             })
             .catch(err => console.log(err))
-            // setPassword("")
-            // setConfirmPassword("")
+        setPassword("")
+        setConfirmPassword("")
     }
 
     const loginHandler = (e) => {
         e.preventDefault();
         axios.post("http://localhost:5000/login/user", {email: loginEmail, password: loginPassword})
-        .then((res) => {
-            
-            if (res.data['success'] === true) {
-                window.location.href=("/dashboard/" + res.data.user)
-
-            }
-        })
-        
-        .catch(err => console.log(err))
-        // setPassword("")
-        // setConfirmPassword("")
+            .then((res) => {
+                
+                if (res.data['success'] === true) {
+                    window.location.href=("/dashboard/" + res.data.user)
+                }
+            })
+            .catch(err => console.log(err))
+        setPassword("")
+        setConfirmPassword("")
     }
 
 
