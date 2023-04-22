@@ -5,7 +5,7 @@ const PlacesList = (props) => {
 
     const {tripData} = props;
     return (
-        <div className='col-3 border'>
+        <div style={{"color": "#fff"}}>
             <h2>Places</h2>
             <ul className='list-group'>
                 {

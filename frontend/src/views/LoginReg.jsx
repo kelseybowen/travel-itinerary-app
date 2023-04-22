@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Button from '@mui/material/Button';
 
 const LoginReg = () => {
 
@@ -13,7 +14,7 @@ const LoginReg = () => {
     const [loginPassword, setLoginPassword] = useState("")
 
 
-    const registrationHandler = (e) => {
+    const handleRegistration = (e) => {
         e.preventDefault();
         axios.post("http://localhost:5000/register/user", { first_name: firstName, last_name: lastName, email: email, password: password, interests: interests })
             .then((res) => {
@@ -26,7 +27,7 @@ const LoginReg = () => {
         setConfirmPassword("")
     }
 
-    const loginHandler = (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
         axios.post("http://localhost:5000/login/user", {email: loginEmail, password: loginPassword})
             .then((res) => {
@@ -43,7 +44,7 @@ const LoginReg = () => {
 
 return (
     <div className='d-flex'>
-        <form onSubmit={registrationHandler}>
+        <form>
             <h2>Register</h2>
             <div className="form-group">
                 <label htmlFor="first_name">First Name</label>
@@ -69,9 +70,9 @@ return (
                 <label htmlFor="interests">Interests</label>
                 <input type="text" name='interests' value={interests} onChange={(e) => setInterests(e.target.value)} />
             </div>
-            <button className='btn btn-primary'>Register</button>
+            <Button onClick={handleRegistration} variant="outlined">Register</Button>
         </form>
-        <form onSubmit={loginHandler}>
+        <form>
             <h5>Login</h5>
             <div className="form-group">
                 <label htmlFor="loginEmail">Email</label>
@@ -79,9 +80,11 @@ return (
             </div>
             <div className="form-group">
                 <label htmlFor="loginPassword">Password</label>
-                <input type="text" name='loginPassword' value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)}/>
+                <input type="password" name='loginPassword' value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)}/>
             </div>
-            <button className='btn btn-primary'>Login</button>
+            <Button onClick={handleLogin} variant="outlined">Login</Button>
+
+            
         </form>
     </div>
 )
