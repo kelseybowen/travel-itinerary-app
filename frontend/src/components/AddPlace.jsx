@@ -1,8 +1,18 @@
-import React from 'react'
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
-const AddPlace = () => {
+const AddPlace = (props) => {
+
+    const {userId} = useParams();
+    const {tripData, setDashboardForm} = props;
+
+    const handleSubmit = (e) => {
+        setDashboardForm("trip")
+    }
+
     return (
-        <div className='col-6 p-2 m-2 border center'>
+        <div className='p-2 m-2 center' style={{"color": "white"}}>
             <form>
                 <h2 className='text-center'>Add a Place</h2>
                 <div className="form-group my-2 row">
@@ -20,7 +30,7 @@ const AddPlace = () => {
                     <textarea className="form-control" rows={3} name="notes"></textarea>
                 </div>
                 <div className="d-flex justify-content-center">
-                    <button className="btn btn-primary">Add Place</button>
+                    <Button onClick={handleSubmit} variant="outlined">Add Place</Button>
                 </div>
             </form >
         </div >

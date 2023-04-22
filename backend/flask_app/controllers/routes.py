@@ -140,8 +140,9 @@ def update_user():
 # Login '/' if not -> '/register'
 
 
-# /dashboard/<int:user_id - plan a trip and openAI
-# dashboard/<int:user_id>/<int:trip_id> - open rest of dashboard. 
+# /dashboard/<int:user_id - dashboard: plan a trip and openAI
+# /dashboard/<int:user_id>/plan/new - dashboard: post data from "add a trip"
+# /dashboard/<int:user_id>/plan/<int:trip_id> - open rest of dashboard to add places to trip - need tripId and success message in response
 
 
 

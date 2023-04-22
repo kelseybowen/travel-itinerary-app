@@ -5,21 +5,32 @@ import Header from './components/Header';
 import Dashboard from './views/Dashboard';
 import LoginReg from './views/LoginReg';
 import AddPlace from './components/AddPlace';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
 
 
 function App() {
 
-  const [theme, setTheme] = useState("light");
+  // const theme = createTheme({
+  //   palette: {
+  //     black: '000E14',
+  //     grey: '3D3D3D',
+  //     blue: '3E6E8E',
+  //     yellow: 'FDA821'
+  //   }
+  // });
+
 
   return (
-    <div className={`App ${theme}`}>
+    <div>
+      {/* <ThemeProvider theme={theme}> */}
       <BrowserRouter>
         <Routes>
           <Route element={<LoginReg />} path='/' />
           <Route element={<Dashboard />} path='/dashboard/:userId' />
-          <Route element={<AddPlace />} path='/dashboard/:userId/:tripId' />
         </Routes>
       </BrowserRouter>
+      {/* </ThemeProvider> */}
     </div>
   );
 }
