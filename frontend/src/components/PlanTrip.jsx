@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Button from '@mui/material/Button';
 
 const PlanTrip = (props) => {
 
@@ -13,22 +12,21 @@ const PlanTrip = (props) => {
     const [endDate, setEndDate] = useState("")
 
     const handleSubmit = (e) => {
-        // e.preventDefault()
-        // axios.post(`https://localhost:5000/${userId}/plan/new`, {title, city, state, country, start_date: startDate, end_date: endDate})
-        //     .then(res => {
-        //         console.log(res.data)
-        //         if (res.data['success'] === true) {
-        //             window.location.href=(`/dashboard/${userId}/plan/`)
-        //         }
-        //     })
-        //     .catch(err => console.log(err))
+        e.preventDefault()
+        axios.post(`https://localhost:5000/${userId}/plan/new`, {title, city, state, country, start_date: startDate, end_date: endDate})
+            .then(res => {
+                console.log(res.data)
+                if (res.data['success'] === true) {
+                    window.location.href=(`/dashboard/${userId}/plan/`)
+                }
+            })
+            .catch(err => console.log(err))
         setDashboardForm("place")
     }
 
-    // style={{"color": "#ADADAD"}}
     return (
-        <div className='p-2 m-2 center' style={{"color": "#fff"}}>
-            <form>
+        <div className='p-2 m-2 border'>
+            <form onSubmit={handleSubmit}>
                 <h2 className='text-center'>Add a Trip</h2>
                 <div className="form-group my-2">
                     <label className="form-label" htmlFor="title">Title</label>
@@ -59,7 +57,7 @@ const PlanTrip = (props) => {
                     </div>
                 </div>
                 <div className='d-flex justify-content-center'>
-                    <Button onClick={handleSubmit} variant="outlined">Add Trip</Button>
+                    <button className="btn btn-primary">Add Trip</button>
                 </div>
             </form>
         </div>

@@ -16,7 +16,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { ThemeProvider, createTheme, useTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import '../darkMode.css'
 
 
@@ -30,8 +30,20 @@ const Header = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
+    // ---------------------------------- THEME
 
-    // -------------- THEME
+    const headerTheme = createTheme({
+        palette: {
+            mode: 'dark',
+        }
+    })
+
+
+    // ---------------------------------- DARK MODE
+    useEffect(() => {
+        localStorage.setItem('themeDL', themeDL);
+        document.body.className = themeDL;
+    }, [themeDL]);
 
     const toggleTheme = () => {
         if (themeDL === 'light') {
@@ -41,15 +53,7 @@ const Header = (props) => {
         }
     };
 
-    const theme = createTheme({
-        palette: {
-            primary: {
-                main: '#474747'
-        }
-    }});
-
-
-    // ---------- NAVBAR METHODS
+    // ----------------------------------- NAVBAR
 
     function appBarLabel(label) {
         return (
@@ -65,19 +69,19 @@ const Header = (props) => {
                             'aria-labelledby': 'basic-button',
                         }}
                     >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
-                        <MenuItem onClick={handleClose}>Saved</MenuItem>
+                        <MenuItem onClick={profile}>Profile</MenuItem>
+                        <MenuItem onClick={saved}>Saved</MenuItem>
                         <MenuItem onClick={logout}>Logout</MenuItem>
                     </Menu>
                 </IconButton>
-                <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+                <Typography variant="h4" noWrap component="div" sx={{ flexGrow: 1 }}>
                     {label}
                 </Typography>
             </Toolbar>
         );
     }
 
-    // -------------- MENU DROPDOWN METHODS
+    // ----------------------------------- MENU DROPDOWN METHODS
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -86,25 +90,28 @@ const Header = (props) => {
         setAnchorEl(null);
     };
 
+    const profile = () => {
+        return window.location.href = (`/${userId}/profile`)
+    }
+
+    const saved = () => {
+        return window.location.href = (`/${userId}/trips`)
+    }
+
     const logout = () => {
         setLoggedInUser("")
         return window.location.href = ("/")
     }
 
-    // -----------------
-
-    useEffect(() => {
-        localStorage.setItem('themeDL', themeDL);
-        document.body.className = themeDL;
-    }, [themeDL]);
 
     return (
         <div>
             {/* ----------- NAV BAR ------------- */}
             <Stack spacing={2} sx={{ flexGrow: 1 }}>
-                {/* <ThemeProvider> */}
+                <ThemeProvider theme={headerTheme}>
+                    {/* sx={{bgcolor: theme.palette.primary.darkBlue}} */}
                     <Box>
-                        <AppBar position="static" sx={{bgcolor: theme.palette.primary.main}}>
+                        <AppBar position="static">
                             <Grid container justifyContent={"space-between"} alignItems={"center"}>
                                 {appBarLabel('Travel')}
                                 <FormGroup>
@@ -113,7 +120,7 @@ const Header = (props) => {
                             </Grid>
                         </AppBar>
                     </Box>
-                {/* </ThemeProvider> */}
+                </ThemeProvider>
             </Stack>
         </div >
     )
