@@ -113,7 +113,26 @@ def dashboard(user_id):
     # response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-
+@app.route ('/<int:user_id>/plan/new', methods = ['POST'])
+def new_trip(user_id):
+    data = request.get_json()
+    data = {
+        'user_id': user_id,
+        "title": data['title'],
+        "city": data['city'],
+        "state": data['state'],
+        "country": data['country'],
+        "start_date": data['start_date'],
+        "end_date": data['end_date']
+        }
+    
+    new_trip = Trip.save_trip(data)
+    response = {
+        'trip_id': new_trip,
+        'success': True
+        }
+    print(response)
+    return jsonify(response)
 
 
 

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const PlanTrip = (props) => {
 
-    const {userId, setDashboardForm} = props;
+    const {setDashboardForm} = props;
+    const {userId} = useParams()
     const [title, setTitle] = useState("")
     const [city, setCity] = useState("")
     const [state, setState] = useState("")
@@ -13,16 +15,16 @@ const PlanTrip = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post(`https://localhost:5000/${userId}/plan/new`, {title, city, state, country, start_date: startDate, end_date: endDate})
+        axios.post(`http://localhost:5000/${userId}/plan/new`, {title, city, state, country, start_date: startDate, end_date: endDate})
             .then(res => {
                 console.log(res.data)
-                if (res.data['success'] === true) {
-                    window.location.href=(`/dashboard/${userId}/plan/`)
-                }
+                // if (res.data['success'] === true) {
+                //     window.location.href=(`/dashboard/${userId}/`)
+                // }
             })
             .catch(err => console.log(err))
-        setDashboardForm("place")
-    }
+            setDashboardForm("place")
+        }
 
     return (
         <div className='p-2 m-2 border'>

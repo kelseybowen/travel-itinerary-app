@@ -12,6 +12,7 @@ function App() {
         <Routes>
           <Route element={<LoginReg />} path='/' />
           <Route element={<Dashboard />} path='/dashboard/:userId' />
+          <Route element={<Dashboard />} path='/dashboard/:userId/plan' />
         </Routes>
       </BrowserRouter>
     </div>
