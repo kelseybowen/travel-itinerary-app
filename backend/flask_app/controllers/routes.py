@@ -146,12 +146,10 @@ def update_user():
 
 
 
-# <int:user_id>/profile - all profile- upcoming default
-# <int:user_id>/profile/pasttrips - all profile- past
+# <int:user_id>/profile - all profile- upcoming default (bottom right window on wireframe)
+# <int:user_id>/profile/pasttrips - all profile- past (bottom right window on wireframe)
 
 
 
-# <int:user_id>/trips - list of trips
-# <int:user_id>/trips/<int:trip_id> - details of trip
-
-
+# <int:user_id>/trips - list of trips (top right window on wireframe)
+# <int:user_id>/trips/<int:trip_id> - details of trip render on lower part of page (top right window on wireframe)

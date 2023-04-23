@@ -1,6 +1,10 @@
 FRONTEND:
 
-
+Kelsey To Do:
+validations on login/reg
+validations on all forms
+finish dashboard layout
+styling
 
 
 

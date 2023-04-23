@@ -12,8 +12,8 @@ const AddPlace = (props) => {
     }
 
     return (
-        <div className='p-2 m-2 center' style={{"color": "white"}}>
-            <form>
+        <div className='p-2 m-2 border'>
+            <form onSubmit={handleSubmit}>
                 <h2 className='text-center'>Add a Place</h2>
                 <div className="form-group my-2 row">
                     <div className="col">
@@ -30,7 +30,7 @@ const AddPlace = (props) => {
                     <textarea className="form-control" rows={3} name="notes"></textarea>
                 </div>
                 <div className="d-flex justify-content-center">
-                    <Button onClick={handleSubmit} variant="outlined">Add Place</Button>
+                    <button className="btn btn-primary">Add Place</button>
                 </div>
             </form >
         </div >
