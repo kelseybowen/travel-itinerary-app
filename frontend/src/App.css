@@ -1,18 +1,17 @@
 
 /* --------------------- THEME ------------------------ */
 
-/* HIGHLIGHT COLOR ( TEAL ) : #03dac5 */
 
 /* --------------------- DARK MODE ---------------------*/
 
 .dark {
-    background-color: #2e2e2e;
-    color: #ADADAD;
+    background-color: #171717;
+    color: #ffffff;
 }
 
 .light {
     background-color: #fff;
-    color: #616161;
+    color: #ffffff;
 }
 
 /* --------------------- LOGIN & REG ---------------------- */
@@ -22,6 +21,12 @@
 
 
 /* --------------------- DASHBAORD ---------------------- */
-.dashbaord-item {
-    background-color: red;
+.dashboard-component {
+    background-color: rgb(63, 63, 63);
+    border-radius: 10px;
+}
+
+.btn {
+    color: white;
+    border: 1px white solid;
 }

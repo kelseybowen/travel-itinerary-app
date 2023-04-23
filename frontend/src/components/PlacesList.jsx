@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 const PlacesList = (props) => {
 
-    const {tripData} = props;
+    const { tripData } = props;
     return (
-        <div className='border'>
+        <div className='dashboard-component p-3'>
             <h2>Places</h2>
             <ul className='list-group'>
                 {
