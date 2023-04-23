@@ -11,7 +11,7 @@ const PlacesList = (props) => {
                 {
                     tripData.map((trip) => {
                         return (
-                            <li className='list-group-item' key={trip.id}><Link to={`/dashboard/${trip.user_id}/${trip.id}`}>{trip.title}</Link></li>
+                            <li className='list-group-item' key={trip.id}><Link to={`/dashboard/${trip.user_id}/${trip.id}`}>{trip.name}</Link></li>
                         )
                     })
                 }
