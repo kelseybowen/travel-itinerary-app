@@ -2,6 +2,7 @@ from flask_app import app
 from flask import render_template, redirect, request, session, flash, jsonify
 from flask_app.models.user import User
 from flask_app.models.trip import Trip
+from flask_app.models.place import Place
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
@@ -127,16 +128,39 @@ def new_trip(user_id):
         }
     
     new_trip = Trip.save_trip(data)
-    print(new_trip)
     response = {
         'tripId': new_trip,
         'success': True
         }
-    print(response)
     return jsonify(response)
 
 
 
+@app.route('/dashboard/<int:user_id>/plan/<int:trip_id>/new', methods=['POST'])
+def add_place(user_id, trip_id):
+    data = request.get_json()
+    data = {
+        'trip_id': trip_id,
+        'name': data['name'],
+        'address': data['address'],
+        'notes': data['notes'],
+    }
+    Place.save_place(data)
+    response = {
+        'success': True,
+    }
+    return jsonify(response)
+    
+    
+@app.route('/dashboard/<int:user_id>/plan/<int:trip_id>')
+def get_trip_details(user_id, trip_id):
+    data = {
+        'user_id': user_id,
+        'id': trip_id,
+    }
+    response = Trip.get_one_trip_with_places(data)
+    print(f'RESULTS----------{response}')
+    return jsonify(response)
 
 #--------------------------------------------------- USER/PROFILE ROUTES --------------------------------
 
@@ -161,14 +185,14 @@ def update_user():
 
 
 # /dashboard/<int:user_id - dashboard: plan a trip and openAI
-# /dashboard/<int:user_id>/plan/new - dashboard: POST route to add trip
-# /dashboard/<int:user_id>/plan/<int:trip_id> - GET route open trip dashboard
-# /dashboard/<int:user_id>/plan/<int:trip_id>/new - POST route to add place
+# /dashboard/<int:user_id>/plan/new - dashboard: post data from "add a trip"
+# /dashboard/<int:user_id>/plan/<int:trip_id> - open rest of dashboard to add places to trip - need tripId and success message in response
 
 
 
 # <int:user_id>/profile - all profile- upcoming default (bottom right window on wireframe)
 # <int:user_id>/profile/pasttrips - all profile- past (bottom right window on wireframe)
+
 
 
 # <int:user_id>/trips - list of trips (top right window on wireframe)
