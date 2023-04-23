@@ -113,7 +113,7 @@ def dashboard(user_id):
     # response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-@app.route ('/<int:user_id>/plan/new', methods = ['POST'])
+@app.route ('/dashboard/<int:user_id>/plan/new', methods = ['POST'])
 def new_trip(user_id):
     data = request.get_json()
     data = {
@@ -127,8 +127,9 @@ def new_trip(user_id):
         }
     
     new_trip = Trip.save_trip(data)
+    print(new_trip)
     response = {
-        'trip_id': new_trip,
+        'tripId': new_trip,
         'success': True
         }
     print(response)
@@ -160,14 +161,14 @@ def update_user():
 
 
 # /dashboard/<int:user_id - dashboard: plan a trip and openAI
-# /dashboard/<int:user_id>/plan/new - dashboard: post data from "add a trip"
-# /dashboard/<int:user_id>/plan/<int:trip_id> - open rest of dashboard to add places to trip - need tripId and success message in response
+# /dashboard/<int:user_id>/plan/new - dashboard: POST route to add trip
+# /dashboard/<int:user_id>/plan/<int:trip_id> - GET route open trip dashboard
+# /dashboard/<int:user_id>/plan/<int:trip_id>/new - POST route to add place
 
 
 
 # <int:user_id>/profile - all profile- upcoming default (bottom right window on wireframe)
 # <int:user_id>/profile/pasttrips - all profile- past (bottom right window on wireframe)
-
 
 
 # <int:user_id>/trips - list of trips (top right window on wireframe)

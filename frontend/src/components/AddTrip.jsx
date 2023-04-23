@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-const PlanTrip = (props) => {
+const AddTrip = () => {
 
-    const {setDashboardForm} = props;
     const {userId} = useParams()
     const [title, setTitle] = useState("")
     const [city, setCity] = useState("")
@@ -15,19 +14,18 @@ const PlanTrip = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post(`http://localhost:5000/${userId}/plan/new`, {title, city, state, country, start_date: startDate, end_date: endDate})
+        axios.post(`http://localhost:5000/dashboard/${userId}/plan/new`, {title, city, state, country, start_date: startDate, end_date: endDate})
             .then(res => {
                 console.log(res.data)
-                // if (res.data['success'] === true) {
-                //     window.location.href=(`/dashboard/${userId}/`)
-                // }
+                if (res.data['success'] === true) {
+                    window.location.href=(`/dashboard/${userId}/plan/${res.data['tripId']}`)
+                }
             })
             .catch(err => console.log(err))
-            setDashboardForm("place")
         }
 
     return (
-        <div className='p-2 m-2 border'>
+        <div className='p-3 m-2 dashboard-component'>
             <form onSubmit={handleSubmit}>
                 <h2 className='text-center'>Add a Trip</h2>
                 <div className="form-group my-2">
@@ -59,11 +57,11 @@ const PlanTrip = (props) => {
                     </div>
                 </div>
                 <div className='d-flex justify-content-center'>
-                    <button className="btn btn-primary">Add Trip</button>
+                    <button className="btn">Add Trip</button>
                 </div>
             </form>
         </div>
     )
 }
 
-export default PlanTrip
+export default AddTrip

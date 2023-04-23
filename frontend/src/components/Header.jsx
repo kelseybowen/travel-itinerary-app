@@ -7,9 +7,6 @@ import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
@@ -17,10 +14,11 @@ import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import '../darkMode.css'
+// import '../darkMode.css'
+import '../App.css'
 
 
-const Header = (props) => {
+const Header = () => {
 
     const { userId } = useParams();
     const [loggedInUser, setLoggedInUser] = useState(userId);
