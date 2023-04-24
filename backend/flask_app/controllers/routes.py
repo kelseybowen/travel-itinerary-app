@@ -181,7 +181,7 @@ def get_trip_details(user_id, trip_id):
         # 'startDate': result['start_date'],
         # 'endDate': result['end_date'],
     }
-    print(f'RESULTS----------{response}')
+    
     return jsonify(response)
 
 
@@ -209,12 +209,11 @@ def edit_place(user_id, trip_id, place_id):
         'success': True,
         'data': one
     }
+    print(f'RESPONSE -------{response}')
     return jsonify(response)
 
 
-
 #POST - PLACE UPDATE
-
 @app.route('/<int:user_id>/trips/<int:trip_id>/<int:place_id>/edit/update', methods=['POST'])
 def update_place(user_id, trip_id, place_id):
     data = request.get_json()
@@ -229,7 +228,79 @@ def update_place(user_id, trip_id, place_id):
         'success': True,
     }
     return jsonify(response)
+
+
+
+#VIEW MY TRIPS PAGE
+@app.route('/<int:user_id>/trips')
+def my_trips(user_id):
+    data = {
+        'user_id': user_id
+    }
+    trips = Trip.get_trips_by_user_id(data)
+    response = {
+        'success': True,
+        'trips': trips
+    }
+    return jsonify(response)
+
+
+#VIEW TRIP DETAILS (TRIPS PAGE)
+@app.route('/<int:user_id>/trips/<int:trip_id>')
+def view_one_trip_details(user_id, trip_id):
+    data = {
+        'user_id': user_id,
+        'id' : trip_id
+    }
+    one = Trip.get_one_trip_with_places(data)
+    response = {
+        'success': True,
+        'data': one
+    }
+    return jsonify(response)
+
+#VIEW TRIP UPDATE
+@app.route('/<int:user_id>/trips/<int:trip_id>/edit')
+def edit_trip(user_id, trip_id):
+    data = {
+        'user_id': user_id,
+        'id' : trip_id
+    }
+    one = Trip.get_one_trip_with_places(data)
+    response = {
+        'success': True,
+        'data': one
+    }
+    return jsonify(response)
+
+#POST TRIP UPDATE
+@app.route('/<int:user_id>/trips/<int:trip_id>/edit/update', methods=['POST'])
+def update_trip(user_id, trip_id):
+    data = request.get_json()
+    data = {
+        'id': trip_id,
+        'title': data['title'],
+        'city': data['city'],
+        'country': data['country'],
+        'start_date': data['start_date'],
+        'end_date': data['end_date'],
+    }
+    Trip.edit_trip(data)
+    response = {
+        'success': True,
+    }
+    return jsonify(response)
+
 #--------------------------------------------------- USER/PROFILE ROUTES --------------------------------
+#VIEW PROFILE 
+@app.route('/<int:user_id>/profile')
+def view_profile(user_id):
+    pass
+
+@app.route('/<int:user_id>/profile/pasttrips')
+def view_pasttrips(user_id):
+    pass
+
 
 
 #UPDATE USER 

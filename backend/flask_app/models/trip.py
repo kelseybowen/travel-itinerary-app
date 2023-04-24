@@ -44,7 +44,7 @@ class Trip:
         result = connectToMySQL(cls.DB).query_db(query, data)
         return result[0]
     
-    #ACCESS ALL TRIPS WITH USER'S NAME
+    #ACCESS ALL TRIPS WITH USER'S ID
     @classmethod
     def get_trips_by_user_id(cls, data):
         query = """SELECT * 
