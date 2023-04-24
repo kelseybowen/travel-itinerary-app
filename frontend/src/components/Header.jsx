@@ -67,8 +67,9 @@ const Header = () => {
                             'aria-labelledby': 'basic-button',
                         }}
                     >
+                        <MenuItem onClick={dashboard}>Dashboard</MenuItem>
                         <MenuItem onClick={profile}>Profile</MenuItem>
-                        <MenuItem onClick={saved}>Saved</MenuItem>
+                        <MenuItem onClick={trips}>My Trips</MenuItem>
                         <MenuItem onClick={logout}>Logout</MenuItem>
                     </Menu>
                 </IconButton>
@@ -88,11 +89,15 @@ const Header = () => {
         setAnchorEl(null);
     };
 
+    const dashboard = () => {
+        return window.location.href = (`/dashboard/${userId}`)
+    }
+
     const profile = () => {
         return window.location.href = (`/${userId}/profile`)
     }
 
-    const saved = () => {
+    const trips = () => {
         return window.location.href = (`/${userId}/trips`)
     }
 

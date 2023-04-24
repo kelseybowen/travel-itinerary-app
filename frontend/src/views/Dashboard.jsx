@@ -3,20 +3,21 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import AddTrip from '../components/AddTrip';
-import OpenAI from '../components/OpenAI';
 import '../App.css'
+import Maps from '../components/Maps';
 
 const Dashboard = (props) => {
 
     // const [dashboardForm, setDashboardForm] = useState("trip");
     const { userId } = useParams();
+    const {tripTitle, setTripTitle} = props;
     // const { themeDL, setThemeDL } = props;
 
-    useEffect(() => {
-        axios.get("http://localhost:5000/dashboard/" + userId)
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
-    }, []);
+    // useEffect(() => {
+    //     axios.get("http://localhost:5000/dashboard/" + userId)
+    //         .then(res => console.log(res))
+    //         .catch(err => console.log(err))
+    // }, []);
 
     return (
 
@@ -25,11 +26,11 @@ const Dashboard = (props) => {
 
             <div className='row justify-content-evenly'>
                 <div className='col-4'>
-                    <AddTrip />
+                    <AddTrip tripTitle={tripTitle} setTripTitle={setTripTitle}/>
                 </div>
 
                 <div className='col-4'>
-                    <OpenAI />
+                    <Maps />
                 </div>
             </div>
         </div >

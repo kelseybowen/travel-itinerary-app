@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-const AddTrip = () => {
+const AddTrip = (props) => {
 
     const {userId} = useParams()
+    const {tripTitle, setTripTitle} = props;
     const [title, setTitle] = useState("")
     const [city, setCity] = useState("")
     const [state, setState] = useState("")
@@ -274,6 +275,9 @@ const AddTrip = () => {
             .then(res => {
                 console.log(res.data)
                 if (res.data['success'] === true) {
+                    console.log(res.data['tripTitle'])
+                    setTripTitle(res.data['tripTitle'])
+                    console.log(tripTitle)
                     window.location.href=(`/dashboard/${userId}/plan/${res.data['tripId']}`)
                 }
             })
@@ -284,7 +288,7 @@ const AddTrip = () => {
     
     const formValidator = () => {
             let isValid = true;
-            if (title.length < 3) {
+            if (tripTitle.length < 3) {
                 setErrors([...errors, "Title must be at least 3 characters."])
                 isValid = false;
             }
