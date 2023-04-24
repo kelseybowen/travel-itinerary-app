@@ -3,41 +3,43 @@ import Header from '../components/Header'
 import AddPlace from '../components/AddPlace'
 import PlacesList from '../components/PlacesList'
 import { useParams } from 'react-router-dom'
-import OpenAI from '../components/OpenAI'
 import axios from 'axios'
 import '../App.css'
+import Maps from '../components/Maps'
 
 
-const TripDashboard = () => {
+const TripDashboard = (props) => {
 
     const {userId, tripId} = useParams();
     const [tripData, setTripData] = useState([]);
+    const {tripTitle, setTripTitle} = props;
 
     useEffect(() => {
         axios.get(`http://localhost:5000/dashboard/${userId}/plan/${tripId}`)
             .then(res => {
-                console.log(res)
-                setTripData(res.data)
-
+                setTripTitle(res.data.tripTitle.title)
+                setTripData(res.data.data)
             })
             .catch(err => console.log(err))
-    })
-
+    }, [])
 
     return (
         <div>
             <Header />
+            <div>
+                <h1>Trip Title: {tripTitle}</h1>
+            </div>
 
-            <div className="row justify-content-evenly">
-                <div className="col-4">
+            <div className="row m-2">
+                <div className="col-6">
                     <AddPlace />
                 </div>
                 <div className='col-4'>
-                    <OpenAI />
+                    <Maps />
                 </div>
             </div>
-            <div className="row">
-                <div className='col-3 m-5'>
+            <div className="row m-2">
+                <div className='col-6'>
                     <PlacesList tripData={tripData} setTripData={setTripData}/>
                 </div>
             </div>

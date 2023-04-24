@@ -86,37 +86,38 @@ def logout_user():
 
 
 #HOME PAGE RENDER UPON SUCCESSFUL LOGIN 
-@app.route('/dashboard/<int:user_id>')
-def dashboard(user_id):
-    # if 'user_id' not in session:
-    #     return redirect('/')
+# @app.route('/dashboard/<int:user_id>')
+# def dashboard(user_id):
+#     # if 'user_id' not in session:
+#     #     return redirect('/')
 
-    data_dict = {
-        'user_id': user_id
-    }
-    all_trips = Trip.get_trips_by_user_id(data_dict)
+#     data_dict = {
+#         'user_id': user_id
+#     }
+#     # all_trips = Trip.get_trips_by_user_id(data_dict)
     
-    trips = []
+#     trips = []
 
-    for trip in all_trips:
-        trip = {
-            'id': trip.id,
-            'user_id': trip.user_id,
-            'title': trip.title,
-            'city': trip.city,
-            'state': trip.state,
-            'country': trip.country,
-            'start_date': trip.start_date,
-            'end_date': trip.end_date,
-        }
-        trips.append(trip)
-    response = jsonify(trips)
-    # response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+#     for trip in all_trips:
+#         trip = {
+#             'id': trip.id,
+#             'user_id': trip.user_id,
+#             'title': trip.title,
+#             'city': trip.city,
+#             'state': trip.state,
+#             'country': trip.country,
+#             'start_date': trip.start_date,
+#             'end_date': trip.end_date,
+#         }
+#         trips.append(trip)
+#     response = jsonify(trips)
+#     # response.headers.add('Access-Control-Allow-Origin', '*')
+#     return response
 
 @app.route ('/dashboard/<int:user_id>/plan/new', methods = ['POST'])
 def new_trip(user_id):
     data = request.get_json()
+    print(data)
     data = {
         'user_id': user_id,
         "title": data['title'],
@@ -128,10 +129,16 @@ def new_trip(user_id):
         }
     
     new_trip = Trip.save_trip(data)
+    data = {
+        'id': new_trip
+    }
+    trip_details = Trip.get_one_trip_title(data)
     response = {
+        'tripTitle': trip_details['title'],
         'tripId': new_trip,
         'success': True
         }
+    print(f"response = {response}")
     return jsonify(response)
 
 
@@ -159,6 +166,21 @@ def get_trip_details(user_id, trip_id):
         'id': trip_id,
     }
     response = Trip.get_one_trip_with_places(data)
+    data = {
+        'id': trip_id
+    }
+    trip_details = Trip.get_one_trip_title(data)
+    response = {
+        'success': True,
+        'tripTitle': trip_details,
+        'data': response
+        
+        # 'city': result['city'],
+        # 'state': result['state'],
+        # 'country': result['country'],
+        # 'startDate': result['start_date'],
+        # 'endDate': result['end_date'],
+    }
     print(f'RESULTS----------{response}')
     return jsonify(response)
 
@@ -196,4 +218,5 @@ def update_user():
 
 
 # <int:user_id>/trips - list of trips (top right window on wireframe)
+# <int:user_id>/trips/<int:trip_id>/<int:place_id>/edit - edit place details
 # <int:user_id>/trips/<int:trip_id> - details of trip render on lower part of page (top right window on wireframe)
