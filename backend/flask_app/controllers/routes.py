@@ -1,5 +1,5 @@
 from flask_app import app
-from flask import render_template, redirect, request, session, flash, jsonify
+from flask import  redirect, request, session, flash, jsonify
 from flask_app.models.user import User
 from flask_app.models.trip import Trip
 from flask_app.models.place import Place
@@ -184,6 +184,51 @@ def get_trip_details(user_id, trip_id):
     print(f'RESULTS----------{response}')
     return jsonify(response)
 
+
+@app.route('/<int:user_id>/trips/<int:trip_id>/<int:place_id>/delete')
+def delete_place( user_id, trip_id, place_id):
+    data = {
+        'id': place_id,
+    }
+    Place.delete_place(data)
+    print('SUCCESSSS--------------------------------')
+    response = {
+        'success': True,
+    }
+    return jsonify(response)
+
+
+#VIEW - PLACE UPDATE
+@app.route('/<int:user_id>/trips/<int:trip_id>/<int:place_id>/edit')
+def edit_place(user_id, trip_id, place_id):
+    data = {
+        'id': place_id,
+    }
+    one = Place.get_place_by_id(data)
+    response = {
+        'success': True,
+        'data': one
+    }
+    return jsonify(response)
+
+
+
+#POST - PLACE UPDATE
+
+@app.route('/<int:user_id>/trips/<int:trip_id>/<int:place_id>/edit/update', methods=['POST'])
+def update_place(user_id, trip_id, place_id):
+    data = request.get_json()
+    data = {
+        'trip_id': trip_id,
+        'name': data['name'],
+        'address': data['address'],
+        'notes': data['notes'],
+    }
+    Place.edit_place(data)
+    response = {
+        'success': True,
+    }
+    return jsonify(response)
 #--------------------------------------------------- USER/PROFILE ROUTES --------------------------------
 
 

@@ -7,6 +7,23 @@ const PlacesList = (props) => {
     const {userId, tripId} = useParams();
     const {tripData, setTripData} = props;
 
+    const handleDelete = (placeId) => {
+        axios.get(`http://localhost:5000/${userId}/trips/${tripId}/${placeId}/delete`)
+        .then(res => {
+            setTripData(res.data);
+            window.location.href=(`/dashboard/${userId}/plan/${tripId}`)
+        })
+        .catch(err => console.log(err))
+    }
+
+    const handleEdit = (placeId) => {
+        axios.get(`http://localhost:5000/${userId}/trips/${tripId}/${placeId}/edit`)
+        .then(res => {
+            setTripData(res.data);
+            window.location.href=(`/dashboard/${userId}/plan/${tripId}`)
+        })
+        .catch(err => console.log(err))
+    }
     return (
         <div className='dashboard-component p-3 m-2'>
             <h2 className='text-center'>Places</h2>
@@ -28,8 +45,8 @@ const PlacesList = (props) => {
                                 <td>{place.address}</td>
                                 <td>{place.notes}</td>
                                 <td>
-                                    <button className="btn btn-primary"><Link to={`/${userId}/trips/${tripId}/${place.id}/edit`} style={{"color": "white", "textDecoration": "none"}}>Edit</Link></button>
-                                    <button className="btn btn-danger"><Link to={`/${userId}/trips/${tripId}/${place.id}/delete`} style={{"color": "white", "textDecoration": "none"}}>Delete</Link></button>
+                                    <button className="btn btn-primary" onClick={() => handleEdit(place.id)} style={{"color": "white", "textDecoration": "none"}}>Edit</button>
+                                    <button className="btn btn-danger" onClick={() => handleDelete(place.id)} style={{"color": "white", "textDecoration": "none"}}>Delete</button>
                                 </td>
                             </tr>
                         )

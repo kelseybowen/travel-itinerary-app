@@ -46,6 +46,16 @@ class Place:
         results = connectToMySQL(cls.DB).query_db(query, data)
         return results
     
+    @classmethod 
+    def get_place_by_id(cls, data):
+        query = """SELECT * 
+                FROM places
+                WHERE id = %(id)s
+                ;"""
+                
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        return results
+    
     # @staticmethod
     # def validate_place(place):
     #     is_valid = True
