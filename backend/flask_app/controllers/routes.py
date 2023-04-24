@@ -292,14 +292,38 @@ def update_trip(user_id, trip_id):
     return jsonify(response)
 
 #--------------------------------------------------- USER/PROFILE ROUTES --------------------------------
+
+
 #VIEW PROFILE 
 @app.route('/<int:user_id>/profile')
 def view_profile(user_id):
-    pass
+    data = {
+        'id': user_id,
+    }
+    trips = Trip.get_trips_by_user_id(data)
+    user = User.get_user_by_id(data)
+    response = {
+        'success': True,
+        'userData': user,
+        'tripsData': trips
+    }
+    return jsonify(response)
 
+
+#VIEW PROFILE
 @app.route('/<int:user_id>/profile/pasttrips')
 def view_pasttrips(user_id):
-    pass
+    data = {
+        'id': user_id,
+    }
+    trips = Trip.get_trips_by_user_id(data)
+    user = User.get_user_by_id(data)
+    response = {
+        'success': True,
+        'userData': user,
+        'tripsData': trips
+    }
+    return jsonify(response)
 
 
 
