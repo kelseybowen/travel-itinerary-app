@@ -16,6 +16,7 @@ function App() {
           <Route element={<LoginReg />} path='/' />
           <Route element={<Dashboard tripTitle={tripTitle} setTripTitle={setTripTitle}/>} path='/dashboard/:userId' />
           <Route element={<TripDashboard tripTitle={tripTitle} setTripTitle={setTripTitle}/>} path='/dashboard/:userId/plan/:tripId' />
+          <Route element={<TripDashboard tripTitle={tripTitle} setTripTitle={setTripTitle}/>} path='/dashboard/:userId/plan/:tripId/:placeId' />
         </Routes>
       </BrowserRouter>
     </div>

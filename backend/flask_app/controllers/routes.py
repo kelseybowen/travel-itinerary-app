@@ -185,7 +185,7 @@ def get_trip_details(user_id, trip_id):
     return jsonify(response)
 
 
-@app.route('/<int:user_id>/trips/<int:trip_id>/<int:place_id>/delete')
+@app.route('/dashboard/<int:user_id>/plan/<int:trip_id>/<int:place_id>/delete')
 def delete_place( user_id, trip_id, place_id):
     data = {
         'id': place_id,
@@ -199,7 +199,7 @@ def delete_place( user_id, trip_id, place_id):
 
 
 #VIEW - PLACE UPDATE
-@app.route('/<int:user_id>/trips/<int:trip_id>/<int:place_id>/edit')
+@app.route('/dashboard/<int:user_id>/plan/<int:trip_id>/<int:place_id>/edit')
 def edit_place(user_id, trip_id, place_id):
     data = {
         'id': place_id,
@@ -207,21 +207,24 @@ def edit_place(user_id, trip_id, place_id):
     one = Place.get_place_by_id(data)
     response = {
         'success': True,
-        'data': one
+        'data': one[0]
     }
-    print(f'RESPONSE -------{response}')
+
     return jsonify(response)
 
 
 #POST - PLACE UPDATE
-@app.route('/<int:user_id>/trips/<int:trip_id>/<int:place_id>/edit/update', methods=['POST'])
+
+@app.route('/dashboard/<int:user_id>/plan/<int:trip_id>/<int:place_id>/edit/update', methods=['PUT'])
 def update_place(user_id, trip_id, place_id):
     data = request.get_json()
+    print(data)
     data = {
         'trip_id': trip_id,
         'name': data['name'],
         'address': data['address'],
         'notes': data['notes'],
+        'id': place_id
     }
     Place.edit_place(data)
     response = {
