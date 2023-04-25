@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import AddPlace from '../components/AddPlace'
-import EditPlace from '../components/EditPlace'
 import PlacesList from '../components/PlacesList'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
@@ -16,8 +15,6 @@ const TripDashboard = (props) => {
     const [tripData, setTripData] = useState([]);
     const [placeData, setPlaceData] = useState({});
     const [isEdit, setIsEdit] = useState(false)
-    const [heading, setHeading] = useState("Add A Place")
-    const [buttonText, setButtonText] = useState("Add Place")
 
 
     useEffect(() => {
@@ -27,7 +24,7 @@ const TripDashboard = (props) => {
                 setTripData(res.data.data)
             })
             .catch(err => console.log(err))
-    }, [tripId])
+    }, [])
 
     return (
         <div>
@@ -38,12 +35,9 @@ const TripDashboard = (props) => {
 
             <div className="row m-2">
                 <div className="col-6">
-                    {isEdit ? (
-                        <EditPlace placeData={placeData} setPlaceData={setPlaceData} isEdit={isEdit} setIsEdit={setIsEdit} heading={heading} setHeading={setHeading}/>
-                    ) : (
-                        <AddPlace isEdit={isEdit} setIsEdit={setIsEdit} placeData={placeData} setPlaceData={setPlaceData} heading={heading} setHeading={setHeading}/>
-                    )
-                    }
+
+                    <AddPlace isEdit={isEdit} setIsEdit={setIsEdit} placeData={placeData} setPlaceData={setPlaceData} />
+
                 </div>
                 <div className='col-4'>
                     <Maps />
@@ -51,7 +45,7 @@ const TripDashboard = (props) => {
             </div>
             <div className="row m-2">
                 <div className='col-6'>
-                    <PlacesList tripData={tripData} setTripData={setTripData} placeData={placeData} setPlaceData={setPlaceData} isEdit={isEdit} setIsEdit={setIsEdit} heading={heading} setHeading={setHeading}/>
+                    <PlacesList tripData={tripData} setTripData={setTripData} placeData={placeData} setPlaceData={setPlaceData} isEdit={isEdit} setIsEdit={setIsEdit} />
                 </div>
             </div>
         </div>

@@ -8,16 +8,8 @@ import Maps from '../components/Maps';
 
 const Dashboard = (props) => {
 
-    // const [dashboardForm, setDashboardForm] = useState("trip");
     const { userId } = useParams();
     const {tripTitle, setTripTitle} = props;
-    // const { themeDL, setThemeDL } = props;
-
-    // useEffect(() => {
-    //     axios.get("http://localhost:5000/dashboard/" + userId)
-    //         .then(res => console.log(res))
-    //         .catch(err => console.log(err))
-    // }, []);
 
     return (
 
@@ -25,11 +17,11 @@ const Dashboard = (props) => {
             <Header />
 
             <div className='row justify-content-evenly'>
-                <div className='col-4'>
+                <div className='col-6'>
                     <AddTrip tripTitle={tripTitle} setTripTitle={setTripTitle}/>
                 </div>
 
-                <div className='col-4'>
+                <div className='col-6'>
                     <Maps />
                 </div>
             </div>

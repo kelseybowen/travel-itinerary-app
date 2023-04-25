@@ -215,7 +215,7 @@ def edit_place(user_id, trip_id, place_id):
 
 #POST - PLACE UPDATE
 
-@app.route('/dashboard/<int:user_id>/plan/<int:trip_id>/<int:place_id>/edit/update', methods=['PUT'])
+@app.route('/dashboard/<int:user_id>/plan/<int:trip_id>/<int:place_id>/update', methods=['PUT'])
 def update_place(user_id, trip_id, place_id):
     data = request.get_json()
     print(data)

@@ -26,21 +26,20 @@ const PlacesList = (props) => {
     }
 
     const handleEdit = (placeId) => {
-        axios.get(`http://localhost:5000/dashboard/${userId}/plan/${tripId}/${placeId}/edit`)
-        .then(res => {
+        // axios.get(`http://localhost:5000/dashboard/${userId}/plan/${tripId}/${placeId}/edit`)
+        // .then(res => {
             // setTripData(res.data);
-            setPlaceData(res.data.data)
+            // setPlaceData(res.data.data)
             // console.log(`place dataaaaaa ${placeData.name}`)
             // console.log(placeData)
             // placeId = placeData.id
-            setIsEdit(true)
-            setHeading("Edit Place")
-            setButtonText("Update")
-            navigate(`/dashboard/${userId}/plan/${tripId}/${placeId}`)
-        })
-        .catch(err => console.log(err))
-        console.log(placeId)
-        navigate(`/dashboard/${userId}/plan/${tripId}/${placeId}`)
+            // setIsEdit(true)
+            window.location.href = (`/dashboard/${userId}/plan/${tripId}/${placeId}`)
+            // navigate(`/dashboard/${userId}/plan/${tripId}/${placeId}`)
+        // })
+        // .catch(err => console.log(err))
+        // console.log(placeId)
+        // navigate(`/dashboard/${userId}/plan/${tripId}/${placeId}`)
     }
 
     const removeFromDom = placeId => {
