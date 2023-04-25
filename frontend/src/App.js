@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginReg from './views/LoginReg';
 import Dashboard from './views/Dashboard';
 import TripDashboard from './views/TripDashboard';
+import PlaceEditDash from './views/PlaceEditDash';
 
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
           <Route element={<LoginReg />} path='/' />
           <Route element={<Dashboard tripTitle={tripTitle} setTripTitle={setTripTitle}/>} path='/dashboard/:userId' />
           <Route element={<TripDashboard tripTitle={tripTitle} setTripTitle={setTripTitle}/>} path='/dashboard/:userId/plan/:tripId' />
-          <Route element={<TripDashboard tripTitle={tripTitle} setTripTitle={setTripTitle}/>} path='/dashboard/:userId/plan/:tripId/:placeId' />
+          <Route element={<PlaceEditDash tripTitle={tripTitle} setTripTitle={setTripTitle}/>} path='/dashboard/:userId/plan/:tripId/:placeId' />
         </Routes>
       </BrowserRouter>
     </div>

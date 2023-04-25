@@ -14,7 +14,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-// import '../darkMode.css'
 import '../App.css'
 
 
@@ -112,11 +111,10 @@ const Header = () => {
             {/* ----------- NAV BAR ------------- */}
             <Stack spacing={2} sx={{ flexGrow: 1 }}>
                 <ThemeProvider theme={headerTheme}>
-                    {/* sx={{bgcolor: theme.palette.primary.darkBlue}} */}
                     <Box>
                         <AppBar position="static">
                             <Grid container justifyContent={"space-between"} alignItems={"center"}>
-                                {appBarLabel('Travel')}
+                                {appBarLabel('Travel Planner')}
                                 <FormGroup>
                                     <FormControlLabel control={<Switch color='default' />} name="darkModeSwitch" id="darkModeSwitch" onClick={toggleTheme} />
                                 </FormGroup>

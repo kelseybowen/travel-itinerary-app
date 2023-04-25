@@ -5,11 +5,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 const AddPlace = (props) => {
 
     const { userId, tripId, placeId } = useParams();
-    const { isEdit, setIsEdit} = props;
     const [placeName, setPlaceName] = useState("")
     const [address, setAddress] = useState("")
     const [notes, setNotes] = useState("")
-    const navigate = useNavigate();
 
 
     const handleSubmit = (e) => {
@@ -17,8 +15,7 @@ const AddPlace = (props) => {
         axios.post(`http://localhost:5000/dashboard/${userId}/plan/${tripId}/new`, { name: placeName, address, notes })
             .then(res => {
                 console.log(res.data)
-                navigate(`/dashboard/${userId}/plan/${tripId}`)
-                // window.location.href=(`/dashboard/${userId}/plan/${tripId}`)
+                window.location.href=(`/dashboard/${userId}/plan/${tripId}`)
             })
             .catch(err => console.log(err))
     }

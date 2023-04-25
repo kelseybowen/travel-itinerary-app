@@ -27,9 +27,9 @@ const RegForm = () => {
 
 
     return (
-        <div>
+        <div className='dashboard-component dark p-4 m-2'>
             <form onSubmit={handleRegistration}>
-                <h2>Register</h2>
+                <h2 className='display-4 text-center'>Register</h2>
                 <div className="form-group">
                     <label className='form-label' htmlFor="first_name">First Name</label>
                     <input className='form-control' type="text" name='first_name' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
@@ -54,8 +54,8 @@ const RegForm = () => {
                     <label className='form-label' htmlFor="interests">Interests</label>
                     <input className='form-control' type="text" name='interests' value={interests} onChange={(e) => setInterests(e.target.value)} />
                 </div>
-                <div className="form-group text-center">
-                    <button className="btn btn-primary">Register</button>
+                <div className="form-group text-center mt-3">
+                    <button className="btn">Register</button>
                 </div>
             </form>
         </div>
