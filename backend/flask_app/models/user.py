@@ -92,23 +92,23 @@ class User:
         }
         valid_user = User.get_by_email(data)
         if valid_user:
-            response.append('emailInDB')
+            response.append('Email already in use')
             is_valid = False
         #Registration Validations
         if len(user['first_name']) < 3:
-            response.append('firstName')
+            response.append('First Name must be at least 3 characters')
             is_valid = False
         if len(user['last_name']) < 3:
-            response.append('lastName')
+            response.append('Last Name must be at least 3 characters')
             is_valid = False
         if not EMAIL_REGEX.match(user['email']):
-            response.append('emailNotValid')
+            response.append('Not a valid email address')
             is_valid = False
         if len(user['password']) < 6:
-            response.append('password')
+            response.append('Password must be at least 6 characters')
             is_valid = False
         if user['conf_password'] != user['password']:
-            response.append('conf_password')
+            response.append('Passwords do not match')
             is_valid = False
         result = {
             'success': is_valid,

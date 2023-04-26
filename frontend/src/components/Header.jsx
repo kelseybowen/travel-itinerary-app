@@ -13,6 +13,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import axios from 'axios';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import '../App.css'
 
@@ -102,6 +103,7 @@ const Header = () => {
 
     const logout = () => {
         setLoggedInUser("")
+        axios.get("http://localhost:5000/logout")
         return window.location.href = ("/")
     }
 

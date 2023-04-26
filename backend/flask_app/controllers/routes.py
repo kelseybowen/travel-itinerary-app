@@ -10,6 +10,9 @@ bcrypt = Bcrypt(app)
 
 #--------------------------------------------- LOGIN/REG ROUTES -----------------------------------
 
+@app.route('/')
+def index():
+    return True
 
 #REGISTER - VALIDATIONS IN USER MODEL 
 @app.route('/register/user', methods=['POST'])
@@ -69,7 +72,8 @@ def login():
     }
     if result == None or bcrypt.check_password_hash(result.password, login_pass['password']) == False:
         response = {
-            'success': False
+            'success': False,
+            'message': 'Invalid Login Credentials'
         }
         print(f'THIS WORKS --------{response}')
         return jsonify(response)
@@ -92,42 +96,39 @@ def login():
 @app.route('/logout')
 def logout_user():
     session.clear()
-    return redirect('/')
+    response = {
+        'success': True,
+        'message': 'Session has been cleared'
+    }
+    print('THIS WORKED')
+    return jsonify(response)
 
 #--------------------------------------------- DASHBOARD/TRIP ROUTES -----------------------------------
 
 
-#HOME PAGE RENDER UPON SUCCESSFUL LOGIN 
-# @app.route('/dashboard/<int:user_id>')
-# def dashboard(user_id):
-#     # if 'user_id' not in session:
-#     #     return redirect('/')
 
-#     data_dict = {
-#         'user_id': user_id
-#     }
-#     # all_trips = Trip.get_trips_by_user_id(data_dict)
+@app.route('/dashboard/<int:user_id>')
+def dashboard():
+    if 'user_id' not in session:
+        response = {
+            'success': False
+        }
+        return jsonify(response)
     
-#     trips = []
-
-#     for trip in all_trips:
-#         trip = {
-#             'id': trip.id,
-#             'user_id': trip.user_id,
-#             'title': trip.title,
-#             'city': trip.city,
-#             'state': trip.state,
-#             'country': trip.country,
-#             'start_date': trip.start_date,
-#             'end_date': trip.end_date,
-#         }
-#         trips.append(trip)
-#     response = jsonify(trips)
-#     # response.headers.add('Access-Control-Allow-Origin', '*')
-#     return response
+    response = {
+        'success': True
+    }
+    # response.headers.add('Access-Control-Allow-Origin', '*')
+    return jsonify(response)
 
 @app.route ('/dashboard/<int:user_id>/plan/new', methods = ['POST'])
 def new_trip(user_id):
+    if 'user_id' not in session:
+        response = {
+            'success': False,
+            'message': 'Please Login'
+        }
+        return jsonify(response)
     data = request.get_json()
     print(data)
     data = {
@@ -173,6 +174,11 @@ def add_place(user_id, trip_id):
     
 @app.route('/dashboard/<int:user_id>/plan/<int:trip_id>')
 def get_trip_details(user_id, trip_id):
+    if 'user_id' not in session:
+        response = {
+            'success': False,
+        }
+        return jsonify(response)
     data = {
         'user_id': user_id,
         'id': trip_id,
