@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../App.css'
 
-const LoginForm = () => {
+const LoginForm = (props) => {
 
+    const { isLoggedIn, setIsLoggedIn } = props;
     const [loginEmail, setLoginEmail] = useState("")
     const [loginPassword, setLoginPassword] = useState("")
     const [emailError, setEmailError] = useState("")
@@ -25,19 +26,22 @@ const LoginForm = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        if (formValidator){
+        console.log(`isLoggedIn ==== ${isLoggedIn}`)
+        // if (formValidator){
 
-            const data = { email: loginEmail, password: loginPassword }
-            console.log(data);
-            axios.post("http://localhost:5000/login/user", data)
+        const data = { email: loginEmail, password: loginPassword }
+        console.log(data);
+        axios.post("http://localhost:5000/login/user", data)
             .then((res) => {
                 if (res.data['success'] === true) {
+                    setIsLoggedIn(true)
+
                     window.location.href = ("/dashboard/" + res.data.user)
                 }
             })
             .catch(err => console.log(err))
-            setLoginPassword("")
-        }
+        // setLoginPassword("")
+        // }
     }
 
     return (

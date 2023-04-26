@@ -9,12 +9,14 @@ import Maps from '../components/Maps';
 const Dashboard = (props) => {
 
     const { userId } = useParams();
-    const {tripTitle, setTripTitle} = props;
+    const {tripTitle, setTripTitle, isLoggedIn, setIsLoggedIn} = props;
+
+    
 
     return (
 
         <div>
-            <Header />
+            <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
 
             <div className='row justify-content-evenly'>
                 <div className='col-6'>

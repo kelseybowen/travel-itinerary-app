@@ -123,12 +123,12 @@ def dashboard():
 
 @app.route ('/dashboard/<int:user_id>/plan/new', methods = ['POST'])
 def new_trip(user_id):
-    if 'user_id' not in session:
-        response = {
-            'success': False,
-            'message': 'Please Login'
-        }
-        return jsonify(response)
+    # if 'user_id' not in session:
+    #     response = {
+    #         'success': False,
+    #         'message': 'Please Login'
+    #     }
+    #     return jsonify(response)
     data = request.get_json()
     print(data)
     data = {
