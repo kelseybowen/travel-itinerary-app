@@ -14,8 +14,9 @@ const RegForm = () => {
 
     const handleRegistration = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:5000/register/user", { first_name: firstName, last_name: lastName, email: email, password: password, interests: interests })
+        axios.post("http://localhost:5000/register/user", { first_name: firstName, last_name: lastName, email: email, password: password, conf_password: confirmPassword, interests: interests })
             .then((res) => {
+                console.log(res.data)
                 if (res.data.success) {
                     window.location.href = ("/dashboard/" + res.data.user)
                 }

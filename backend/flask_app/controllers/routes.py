@@ -15,6 +15,17 @@ bcrypt = Bcrypt(app)
 @app.route('/register/user', methods=['POST'])
 def register():
     data = request.get_json()
+    print(data)
+    user_data = User.validate_user(data)
+    print(f'FROM BACKEND -------{user_data}')
+    if user_data['success'] != True:
+        response = {
+            'success': False,
+            'messages': user_data['messages']
+        }
+        print(f'RESPONSE ---------------{response}')
+        return jsonify(response)
+    
     pw_hash = bcrypt.generate_password_hash(data['password'])
     # if not User.validate_user(request.form):
     #     session['first_name'] = request.form['first_name']
@@ -49,18 +60,19 @@ def register():
 @app.route('/login/user', methods=['POST'])
 def login():
     data = request.get_json()
-    login_data = {
+    login_email = {
         'email': data['email'],
-        # 'password': data['password'],
     }
-    result = User.get_by_email(login_data)
-    # if not User.validate_login(stuff):
-    #     return redirect('/')
-    # bcrypt.check_password_hash()
-    # data = {
-    #     "email": data['email'],
-    #     "password": pw_hash,
-    #     }
+    result = User.get_by_email(login_email)
+    login_pass = {
+        'password': data['password'],
+    }
+    if result == None or bcrypt.check_password_hash(result.password, login_pass['password']) == False:
+        response = {
+            'success': False
+        }
+        print(f'THIS WORKS --------{response}')
+        return jsonify(response)
     
     session['user_id'] = result.id
     session['first_name'] = result.first_name

@@ -1,6 +1,6 @@
 from flask_app.config.connection import connectToMySQL
 from flask_app import app
-from flask import flash, session, request, jsonify
+from flask import flash, session, request, jsonify, json
 import re
 from flask_bcrypt import Bcrypt     
 bcrypt = Bcrypt(app)
@@ -81,37 +81,42 @@ class User:
         return results
     
     
-    # ALL VALIDATIONS ON FRONTEND??
-    # #REGISTRATION 
-    # @staticmethod
-    # def validate_user(user):
-    #     is_valid = True
-    #     #check if user exists 
-    #     data = {
-    #         "email": user['email']
-    #     }
-    #     valid_user = User.get_by_email(data)
-    #     if valid_user:
-    #         flash("Email already in use! Register with a different email or login", 'register')
-    #         is_valid = False
-    #     #Registration Validations
-    #     if len(user['first_name']) < 3:
-    #         flash("First name must be at least 3 characters", 'register')
-    #         is_valid = False
-    #     if len(user['last_name']) < 3:
-    #         flash("Last name must be at least 3 characters", 'register')
-    #         is_valid = False
-    #     if not EMAIL_REGEX.match(user['email']):
-    #         flash('Invalid email address', 'register')
-    #         is_valid = False
-    #     if len(user['password']) < 1:
-    #         flash('Password must be at least 8 characters', 'register')
-    #         is_valid = False
-    #     if user['conf_password'] != user['password']:
-    #         flash('Password does not match.', 'register')
-    #         is_valid = False
-    #     return is_valid
-    
+    #REGISTRATION 
+    @staticmethod
+    def validate_user(user):
+        is_valid = True
+        response = []
+        #check if user exists 
+        data = {
+            "email": user['email']
+        }
+        valid_user = User.get_by_email(data)
+        if valid_user:
+            response.append('emailInDB')
+            is_valid = False
+        #Registration Validations
+        if len(user['first_name']) < 3:
+            response.append('firstName')
+            is_valid = False
+        if len(user['last_name']) < 3:
+            response.append('lastName')
+            is_valid = False
+        if not EMAIL_REGEX.match(user['email']):
+            response.append('emailNotValid')
+            is_valid = False
+        if len(user['password']) < 6:
+            response.append('password')
+            is_valid = False
+        if user['conf_password'] != user['password']:
+            response.append('conf_password')
+            is_valid = False
+        result = {
+            'success': is_valid,
+            'messages': response,
+        }
+        print(f'FROM MODEL ----------{result}')
+        return result
+
     
     # #LOGIN VALIDATION 
     # @staticmethod
