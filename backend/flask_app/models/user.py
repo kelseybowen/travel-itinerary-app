@@ -86,14 +86,14 @@ class User:
     def validate_user(user):
         print(f"user = {user}")
         is_valid = True
-        response = []
+        response = {}
         #check if user exists 
         data = {
             "email": user['email']
         }
         valid_user = User.get_by_email(data)
         if valid_user:
-            response.append('Email already in use')
+            response['valid_user'] = 'Email already in use'
             is_valid = False
         # Registration Validations
         # if len(user['first_name']) < 3:
@@ -103,20 +103,20 @@ class User:
         #     response.append('Last Name must be at least 3 characters')
         #     is_valid = False
         if not EMAIL_REGEX.match(user['email']):
-            response.append('Not a valid email address')
+            response['valid_email'] = 'Not a valid email address'
             is_valid = False
         if len(user['password']) < 6:
-            response.append('Password must be at least 6 characters')
+            response['valid_pw'] = 'Password must be at least 6 characters'
             is_valid = False
         if user['conf_password'] != user['password']:
-            response.append('Passwords do not match')
+            response['pw_match'] = 'Passwords do not match'
             is_valid = False
         result = {
             'success': is_valid,
-            # 'messages': response,
-            'messages': {
+            'messages': response,
+            # 'messages': {
                 
-            }
+            # }
         }
         print(f'FROM MODEL ----------{result}')
         return result

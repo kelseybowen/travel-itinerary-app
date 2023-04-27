@@ -5,8 +5,7 @@ const Protected = (props) => {
 
     const { isLoggedIn, children } = props;
 
-    if (isLoggedIn == false) {
-        console.log(isLoggedIn)
+    if (isLoggedIn === false) {
         return <Navigate to="/" replace />;
     }
     return children;

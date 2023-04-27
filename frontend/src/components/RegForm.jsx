@@ -15,6 +15,7 @@ const RegForm = (props) => {
     const [fNameError, setFNameError] = useState("")
     const [lNameError, setLNameError] = useState("")
     const [emailError, setEmailError] = useState("")
+    const [emailInvalidError, setEmailInvalidError] = useState("")
     const [pwError, setPwError] = useState("")
     const [confPwError, setConfPwError] = useState("")
     const [interestsError, setInterestsError] = useState("")
@@ -31,53 +32,34 @@ const RegForm = (props) => {
             setLNameError("Last Name must be at least 3 characters.")
             isValid = false;
         }
-        // if (email ???)
-        // if (pw ???)
         if (interests.length < 3) {
             setInterestsError("Interests must be at least 3 characters.")
             isValid = false;
         }
+        return isValid;
     }
 
 
     const handleRegistration = (e) => {
         e.preventDefault();
-        // console.log(messages)
+        regValidator()
 
-        // setMessages([])
-        if (regValidator()) {
-
-        
         axios.post("http://localhost:5000/register/user", { first_name: firstName, last_name: lastName, email: email, password: password, conf_password: confirmPassword, interests: interests })
-
             .then((res) => {
-                // console.log(`MESSAGES = ${res.data['messages'][1]}`)
-
+                console.log(res.data['messages'])
                 let result = res.data['success']
                 setIsLoggedIn(result)
+                setEmailInvalidError(res.data['messages']['valid_email'] ? res.data['messages']['valid_email'] : "")
+                setEmailError(res.data['messages']['valid_user'] ? res.data['messages']['valid_user'] : "")
+                setPwError(res.data['messages']['valid_pw'] ? res.data['messages']['valid_pw'] : "")
+                setConfPwError(res.data['messages']['pw_match'] ? res.data['messages']['pw_match'] : "")
                 if (result) {
+                    setIsLoggedIn(true)
                     navigate("/dashboard/" + res.data['user'])
                 }
-                // } else {
-                //     const stuff = res.data['messages']
-                //     for (let m in stuff) {
-                //         console.log(stuff[m])
-                //         setMessages([...messages, stuff[m]])
-                //     }
-                //     console.log(messages)
-                //     // console.log(message)
-                // }
-
-                // if (res.data.success) {
-                //     setIsLoggedIn(true)
-                //     window.location.href = ("/dashboard/" + res.data.user)
-                // }
             })
             .catch(err => console.log(err))
-
-        setPassword("")
-        setConfirmPassword("")
-    }
+        // }
     }
 
 
@@ -85,15 +67,22 @@ const RegForm = (props) => {
         <div className='dashboard-component dark p-4 m-2'>
             <form onSubmit={handleRegistration}>
                 <h2 className='display-4 text-center'>Register</h2>
-                {/* {
+                {
                     messages.map((m, idx) => (
-                            <p key={idx}>{m}</p>
-                        )
+                        <p key={idx}>{m}</p>
                     )
-                } */}
+                    )
+                }
+
+                <p className="text-danger">{fNameError}</p>
+                <p className="text-danger">{lNameError}</p>
+                <p className="text-danger">{emailError}</p>
+                <p className="text-danger">{emailInvalidError}</p>
+                <p className="text-danger">{pwError}</p>
+                <p className="text-danger">{confPwError}</p>
+                <p className="text-danger">{interestsError}</p>
                 <div className="form-group">
                     <label className='form-label' htmlFor="first_name">First Name</label>
-                    <p className="text-danger">{fNameError}</p>
                     <input className='form-control' type="text" name='first_name' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                 </div>
                 <div className="form-group">

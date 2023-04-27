@@ -85,7 +85,7 @@ def login():
     user = session['user_id']
     response = {
         'user': user,
-        'success': True
+        'success': 1
         }
     # response.headers.add('Access-Control-Allow-Origin', '*')
     return jsonify(response)
