@@ -107,28 +107,22 @@ def logout_user():
 
 
 
-@app.route('/dashboard/<int:user_id>')
-def dashboard():
-    if 'user_id' not in session:
-        response = {
-            'success': False
-        }
-        return jsonify(response)
+# @app.route('/dashboard/<int:user_id>')
+# def dashboard():
+#     if 'user_id' not in session:
+#         response = {
+#             'success': False
+#         }
+#         return jsonify(response)
     
-    response = {
-        'success': True
-    }
-    # response.headers.add('Access-Control-Allow-Origin', '*')
-    return jsonify(response)
+#     response = {
+#         'success': True
+#     }
+#     # response.headers.add('Access-Control-Allow-Origin', '*')
+#     return jsonify(response)
 
 @app.route ('/dashboard/<int:user_id>/plan/new', methods = ['POST'])
 def new_trip(user_id):
-    # if 'user_id' not in session:
-    #     response = {
-    #         'success': False,
-    #         'message': 'Please Login'
-    #     }
-    #     return jsonify(response)
     data = request.get_json()
     print(data)
     data = {
@@ -174,11 +168,6 @@ def add_place(user_id, trip_id):
     
 @app.route('/dashboard/<int:user_id>/plan/<int:trip_id>')
 def get_trip_details(user_id, trip_id):
-    if 'user_id' not in session:
-        response = {
-            'success': False,
-        }
-        return jsonify(response)
     data = {
         'user_id': user_id,
         'id': trip_id,
