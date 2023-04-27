@@ -4,6 +4,7 @@ import LoginReg from './views/LoginReg';
 import Dashboard from './views/Dashboard';
 import TripDashboard from './views/TripDashboard';
 import PlaceEditDash from './views/PlaceEditDash';
+import UsersTrips from './views/UsersTrips';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route element={<Dashboard tripTitle={tripTitle} setTripTitle={setTripTitle}/>} path='/dashboard/:userId' />
           <Route element={<TripDashboard tripTitle={tripTitle} setTripTitle={setTripTitle}/>} path='/dashboard/:userId/plan/:tripId' />
           <Route element={<PlaceEditDash tripTitle={tripTitle} setTripTitle={setTripTitle}/>} path='/dashboard/:userId/plan/:tripId/:placeId' />
+          <Route element={<UsersTrips tripTitle={tripTitle} setTripTitle={setTripTitle}/>} path=':userId/trips' />
         </Routes>
       </BrowserRouter>
     </div>
