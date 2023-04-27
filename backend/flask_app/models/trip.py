@@ -44,7 +44,7 @@ class Trip:
         result = connectToMySQL(cls.DB).query_db(query, data)
         return result[0]
     
-    #ACCESS ALL TRIPS WITH USER'S ID
+    #ACCESS ALL TRIPS WITH USER'S ID (CURRENT)
     @classmethod
     def get_trips_by_user_id(cls, data):
         query = """SELECT * 
@@ -52,7 +52,7 @@ class Trip:
                 JOIN users
                 ON trips.user_id = users.id
                 WHERE users.id = %(user_id)s
-                ORDER BY trips.id DESC
+                ORDER BY trips.start_date DESC
                 ;"""
         results = connectToMySQL(cls.DB).query_db(query, data)
         trips = []
@@ -72,8 +72,36 @@ class Trip:
             trips.append(trip)
         return trips
     
-    
+    #ACCESS ALL TRIPS WITH USER'S ID (PAST)
     @classmethod
+    def get_trips_by_user_id_past(cls, data):
+        query = """SELECT * 
+                FROM trips
+                JOIN users
+                ON trips.user_id = users.id
+                WHERE users.id = %(user_id)s
+                ORDER BY trips.end_date
+                ;"""
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        trips = []
+        for row in results:
+            trip = cls(row)
+            user_data = {
+                'id': row["users.id"],
+                'first_name': row["first_name"],
+                'last_name' : row["last_name"],
+                'email' : row["email"],
+                'password' : '',
+                'interests' : row["interests"],
+                'created_at' : row["created_at"],
+                'updated_at' : row["updated_at"], 
+                }
+            trip.user_name = user.User(user_data)
+            trips.append(trip)
+        return trips
+    @classmethod
+    
+    
     def delete_trip(cls, data):
         query = """
                 DELETE FROM trips
@@ -104,4 +132,5 @@ class Trip:
                 ;"""
                 
         results = connectToMySQL(cls.DB).query_db(query, data)
+        print(f'FROM CLASSMETHOD------{results}')
         return results

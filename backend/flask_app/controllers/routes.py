@@ -326,7 +326,7 @@ def view_pasttrips(user_id):
     data = {
         'id': user_id,
     }
-    trips = Trip.get_trips_by_user_id(data)
+    trips = Trip.get_trips_by_user_id_past(data)
     user = User.get_user_by_id(data)
     response = {
         'success': True,
@@ -340,12 +340,7 @@ def view_pasttrips(user_id):
 #UPDATE USER 
 @app.route('/update/user', methods=['POST'])
 def update_user():
-    if 'user_id' not in session:
-        return redirect('/')
-    if not User.validate_update(request.form):
-        return redirect('/account')
-    User.update_user(request.form)
-    return redirect('/account')
+    pass
 
 
 
