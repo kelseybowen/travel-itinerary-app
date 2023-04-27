@@ -9,6 +9,7 @@ const PlacesList = (props) => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log(`hello ${tripData}`)
         axios.get(`http://localhost:5000/dashboard/${userId}/plan/${tripId}`)
             .then(res => {
                 console.log(res.data.data)

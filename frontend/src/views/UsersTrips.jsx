@@ -1,15 +1,20 @@
-import React from 'react'
-import Notes from '../components/Notes'
-import OneTrip from '../components/OneTrip'
-import TripsTable from '../components/TripsTable'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import '../App.css';
+import TripsTable from '../components/TripsTable';
+import Header from '../components/Header';
 
-const UsersTrips = () => {
+const UsersTrips = (props) => {
+
+  const { userId } = useParams();
+  const {tripTitle, setTripTitle, isLoggedIn, setIsLoggedIn} = props;
+
   return (
     <div>
+      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
         <h1>UsersTrips</h1>
         <TripsTable />
-        <OneTrip />
-        <Notes />
     </div>
   )
 }

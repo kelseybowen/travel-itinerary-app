@@ -11,8 +11,7 @@ import Maps from '../components/Maps'
 const TripDashboard = (props) => {
 
     const { userId, tripId } = useParams();
-    const { tripTitle, setTripTitle, isLoggedIn, setIsLoggedIn } = props;
-    const [tripData, setTripData] = useState([]);
+    const { tripTitle, setTripTitle, isLoggedIn, setIsLoggedIn, tripData, setTripData} = props;
     const [placeData, setPlaceData] = useState({});
     const [isEdit, setIsEdit] = useState(false)
 

@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import OneTrip from './OneTrip';
+import Header from '../components/Header'
 
 const TripsTable = (props) => {
-
-
-    const {userId, tripId} = useParams();
-    const {tripData, setTripData} = props;
-    const navigate = useNavigate();
+    const{userId} = useParams();
+    const[tripListData, setTripListData] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/${userId}/trips`)
-            .then(res => {
-                console.log(res.data.data)
-            })
-            .catch(err => console.log(err))
-    }, [])
+    axios.get(`http://localhost:5000/${userId}/trips`)
+        .then(res => {
+            console.log(res.data.trips)
+            setTripListData(res.data.trips)
+        })
+        .catch(err => console.log(err))
+}, [])
 
     return (
         <div>
-            <div class="table-responsive-sm">
-            <h2 className='text-center'>Your Trips</h2>
-                <table class="table tablesize tablehead">
+            <Header />
+            <div className='dashboard-component p-3 m-2'>
+            <h2 className='text-center'>My Trips</h2>
+            <table className='table table-light table-striped'>
                     <thead>
                         <tr>
                             <th>Title</th>
@@ -31,21 +32,21 @@ const TripsTable = (props) => {
                     </thead>
                     <tbody>
                     {
-                    tripData.map((trip) => {
+                    tripListData.map((trip) => {
                         return (
                             <tr key={trip.id}>
-                                <td><Link to={"#"}>{trip.name}</Link></td>
-                                <td>{trip.address}</td>
-                                <td>{trip.notes}</td>
+                                <td><Link to={`/${userId}/trips/${trip.id}`}>{trip.title}</Link></td>
+                                <td>{trip.start_date}</td>
+                                <td>{trip.end_date}</td>
                             </tr>
                         )
-                    })
-                    }
-                </tbody>
+                    }) 
+                }
+                    </tbody>
                 </table>
             </div>
         </div>
-  )
+    )
 }
 
 export default TripsTable

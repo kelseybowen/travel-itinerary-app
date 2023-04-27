@@ -24,6 +24,7 @@ class Place:
                 VALUES 
                 ( %(trip_id)s, %(name)s, %(address)s, %(notes)s, NOW(), NOW() )
                 ;"""
+        print("this works")
         return connectToMySQL(cls.DB).query_db(query, data)
     
     

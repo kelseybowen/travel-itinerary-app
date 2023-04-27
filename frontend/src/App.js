@@ -6,12 +6,17 @@ import TripDashboard from './views/TripDashboard';
 import PlaceEditDash from './views/PlaceEditDash';
 import Protected from './Protected';
 import Test from './views/Test';
+import UsersTrips from './views/UsersTrips';
+import Profile from './views/Profile';
+import UsersTripsDetail from './views/UsersTripsDetail'
 
 
 function App() {
 
   const [tripTitle, setTripTitle] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  // const[oneTripData, setOneTripData] = useState([]);
+  const [tripData, setTripData] = useState([]);
 
   return (
     <div>
@@ -26,13 +31,31 @@ function App() {
           />
           <Route path='/dashboard/:userId/plan/:tripId' element={
             <Protected isLoggedIn={isLoggedIn}>
-              <TripDashboard tripTitle={tripTitle} setTripTitle={setTripTitle} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+              <TripDashboard tripTitle={tripTitle} tripData={tripData} setTripData={setTripData} setTripTitle={setTripTitle} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
             </Protected>
           }
           />
           <Route path='/dashboard/:userId/plan/:tripId/:placeId' element={
             <Protected isLoggedIn={isLoggedIn}>
               <PlaceEditDash tripTitle={tripTitle} setTripTitle={setTripTitle} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+            </Protected>
+          }
+          />
+          <Route path='/:userId/trips' element={
+            <Protected isLoggedIn={isLoggedIn}>
+              <UsersTrips tripTitle={tripTitle} setTripTitle={setTripTitle} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+            </Protected>
+          }
+          />
+          <Route path='/:userId/profile' element={
+            <Protected isLoggedIn={isLoggedIn}>
+              <Profile tripTitle={tripTitle} setTripTitle={setTripTitle} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+            </Protected>
+          }
+          />
+          <Route path='/:userId/trips/:tripId' element={
+            <Protected isLoggedIn={isLoggedIn}>
+              <UsersTripsDetail tripTitle={tripTitle} tripData={tripData} setTripData={setTripData} setTripTitle={setTripTitle} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
             </Protected>
           }
           />

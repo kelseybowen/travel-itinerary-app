@@ -55,22 +55,23 @@ class Trip:
                 ORDER BY trips.start_date DESC
                 ;"""
         results = connectToMySQL(cls.DB).query_db(query, data)
-        trips = []
-        for row in results:
-            trip = cls(row)
-            user_data = {
-                'id': row["users.id"],
-                'first_name': row["first_name"],
-                'last_name' : row["last_name"],
-                'email' : row["email"],
-                'password' : '',
-                'interests' : row["interests"],
-                'created_at' : row["created_at"],
-                'updated_at' : row["updated_at"], 
-                }
-            trip.user_name = user.User(user_data)
-            trips.append(trip)
-        return trips
+        # trips = []
+        # for row in results:
+        #     trip = cls(row)
+        #     user_data = {
+        #         'id': row["users.id"],
+        #         'first_name': row["first_name"],
+        #         'last_name' : row["last_name"],
+        #         'email' : row["email"],
+        #         'password' : '',
+        #         'interests' : row["interests"],
+        #         'created_at' : row["created_at"],
+        #         'updated_at' : row["updated_at"], 
+        #         }
+        #     trip.user_name = user.User(user_data)
+        #     trips.append(trip)
+        print(results)
+        return results
     
     #ACCESS ALL TRIPS WITH USER'S ID (PAST)
     @classmethod
