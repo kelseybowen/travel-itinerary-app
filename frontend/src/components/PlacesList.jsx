@@ -12,7 +12,7 @@ const PlacesList = (props) => {
         axios.get(`http://localhost:5000/dashboard/${userId}/plan/${tripId}`)
             .then(res => {
                 console.log(res.data.data)
-                setTripData(res.data)
+                setTripData(res.data.data)
             })
             .catch(err => console.log(err))
     }, [])
@@ -26,19 +26,7 @@ const PlacesList = (props) => {
     }
 
     const handleEdit = (placeId) => {
-        // axios.get(`http://localhost:5000/dashboard/${userId}/plan/${tripId}/${placeId}/edit`)
-        // .then(res => {
-            // setTripData(res.data);
-            // setPlaceData(res.data.data)
-            // console.log(`place dataaaaaa ${placeData.name}`)
-            // console.log(placeData)
-            // placeId = placeData.id
-            // setIsEdit(true)
-            window.location.href = (`/dashboard/${userId}/plan/${tripId}/${placeId}`)
-            // navigate(`/dashboard/${userId}/plan/${tripId}/${placeId}`)
-        // })
-        // .catch(err => console.log(err))
-        // console.log(placeId)
+        window.location.href = (`/dashboard/${userId}/plan/${tripId}/${placeId}`)
         // navigate(`/dashboard/${userId}/plan/${tripId}/${placeId}`)
     }
 
