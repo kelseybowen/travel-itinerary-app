@@ -5,9 +5,10 @@ const Protected = (props) => {
 
     const { isLoggedIn, children } = props;
 
-    if (!isLoggedIn) {
+    if (isLoggedIn == false) {
+        console.log(isLoggedIn)
         return <Navigate to="/" replace />;
     }
-    return children ? children : <Outlet />;
+    return children;
 };
 export default Protected;

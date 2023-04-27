@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../App.css'
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = (props) => {
 
@@ -9,6 +10,8 @@ const LoginForm = (props) => {
     const [loginPassword, setLoginPassword] = useState("")
     const [emailError, setEmailError] = useState("")
     const [pwError, setPwError] = useState("")
+    const navigate = useNavigate();
+    const [message, setMessage] = useState("")
 
     const formValidator = () => {
         // let isValid = true;
@@ -27,27 +30,30 @@ const LoginForm = (props) => {
     const handleLogin = (e) => {
         e.preventDefault();
         console.log(`isLoggedIn ==== ${isLoggedIn}`)
+        setIsLoggedIn(true)
         // if (formValidator){
 
         const data = { email: loginEmail, password: loginPassword }
         console.log(data);
         axios.post("http://localhost:5000/login/user", data)
             .then((res) => {
-                if (res.data['success'] === true) {
-                    setIsLoggedIn(true)
-
-                    window.location.href = ("/dashboard/" + res.data.user)
+                let result = res.data['success']
+                setIsLoggedIn(result)
+                if (result) {
+                    navigate("/dashboard/" + res.data['user'])
+                } else {
+                    setMessage(res.data['message'])
+                    console.log(message)
                 }
             })
             .catch(err => console.log(err))
-        // setLoginPassword("")
-        // }
     }
 
     return (
         <div className='dashboard-component dark p-4 m-2'>
             <form onSubmit={handleLogin}>
                 <h2 className='display-4 text-center'>Login</h2>
+                <p className='text-center text-danger'>{message}</p>
                 <div className="form-group">
                     <label className='form-label' htmlFor="loginEmail">Email</label>
                     <input key="loginEmail" className='form-control' type="text" name='loginEmail' value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} />

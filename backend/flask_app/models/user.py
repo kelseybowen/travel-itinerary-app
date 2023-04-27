@@ -84,6 +84,7 @@ class User:
     #REGISTRATION 
     @staticmethod
     def validate_user(user):
+        print(f"user = {user}")
         is_valid = True
         response = []
         #check if user exists 
@@ -94,13 +95,13 @@ class User:
         if valid_user:
             response.append('Email already in use')
             is_valid = False
-        #Registration Validations
-        if len(user['first_name']) < 3:
-            response.append('First Name must be at least 3 characters')
-            is_valid = False
-        if len(user['last_name']) < 3:
-            response.append('Last Name must be at least 3 characters')
-            is_valid = False
+        # Registration Validations
+        # if len(user['first_name']) < 3:
+        #     response.append('First Name must be at least 3 characters')
+        #     is_valid = False
+        # if len(user['last_name']) < 3:
+        #     response.append('Last Name must be at least 3 characters')
+        #     is_valid = False
         if not EMAIL_REGEX.match(user['email']):
             response.append('Not a valid email address')
             is_valid = False
@@ -112,7 +113,10 @@ class User:
             is_valid = False
         result = {
             'success': is_valid,
-            'messages': response,
+            # 'messages': response,
+            'messages': {
+                
+            }
         }
         print(f'FROM MODEL ----------{result}')
         return result
