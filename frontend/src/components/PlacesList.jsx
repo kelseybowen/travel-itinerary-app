@@ -11,7 +11,7 @@ const PlacesList = (props) => {
     useEffect(() => {
         axios.get(`http://localhost:5000/dashboard/${userId}/plan/${tripId}`)
             .then(res => {
-                console.log(res.data.data[0])
+                console.log(res.data.data)
                 // setTripData(res.data)
             })
             .catch(err => console.log(err))

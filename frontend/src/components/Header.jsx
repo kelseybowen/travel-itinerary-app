@@ -18,10 +18,10 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import '../App.css'
 
 
-const Header = () => {
+const Header = (props) => {
 
     const { userId } = useParams();
-    const [loggedInUser, setLoggedInUser] = useState(userId);
+    const {isLoggedIn, setIsLoggedIn} = props;
     const [themeDL, setThemeDL] = useState(
         localStorage.getItem('themeDL') || 'light'
     );
@@ -102,9 +102,9 @@ const Header = () => {
     }
 
     const logout = () => {
-        setLoggedInUser("")
         axios.get("http://localhost:5000/logout")
-        return window.location.href = ("/")
+        setIsLoggedIn(false)
+        // return window.location.href = ("/")
     }
 
 

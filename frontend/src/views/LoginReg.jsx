@@ -3,7 +3,9 @@ import LoginForm from '../components/LoginForm';
 import RegForm from '../components/RegForm';
 import '../App.css'
 
-const LoginReg = () => {
+const LoginReg = (props) => {
+
+    const {isLoggedIn, setIsLoggedIn} = props;
 
     return (
         <div>
@@ -11,8 +13,8 @@ const LoginReg = () => {
                 <h1 className="display-1">Travel Planner</h1>
             </div>
             <div className='d-flex justify-content-center p-2 m-2'>
-                <RegForm />
-                <LoginForm />
+                <RegForm isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+                <LoginForm isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
             </div>
         </div>
     )

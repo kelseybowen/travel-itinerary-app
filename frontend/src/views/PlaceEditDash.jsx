@@ -7,7 +7,7 @@ import Maps from '../components/Maps';
 
 const PlaceEditDash = (props) => {
 
-    const { userId, tripId, placeId } = useParams();
+    const { userId, tripId, placeId, isLoggedIn, setIsLoggedIn } = useParams();
     const [placeName, setPlaceName] = useState("")
     const [address, setAddress] = useState("");
     const [notes, setNotes] = useState("");

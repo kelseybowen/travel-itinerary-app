@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../App.css'
 
-const RegForm = () => {
+const RegForm = (props) => {
 
+    const {isLoggedIn, setIsLoggedIn} = props;
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
@@ -18,6 +19,7 @@ const RegForm = () => {
             .then((res) => {
                 console.log(res.data)
                 if (res.data.success) {
+                    setIsLoggedIn(true)
                     window.location.href = ("/dashboard/" + res.data.user)
                 }
             })
