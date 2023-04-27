@@ -5,19 +5,20 @@ import Dashboard from './views/Dashboard';
 import TripDashboard from './views/TripDashboard';
 import PlaceEditDash from './views/PlaceEditDash';
 import Protected from './Protected';
-import UsersTrips from './views/UsersTrips';
+import Test from './views/Test';
 
 
 function App() {
 
   const [tripTitle, setTripTitle] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          {/* <Route element={<LoginReg isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} path='/' />
+          <Route element={<LoginReg isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} path='/' />
+          {/* <Route element={<Test/>} path='/test' /> */}
           <Route path='/dashboard/:userId' element={
             <Protected isLoggedIn={isLoggedIn}>
               <Dashboard tripTitle={tripTitle} setTripTitle={setTripTitle} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
@@ -35,15 +36,10 @@ function App() {
               <PlaceEditDash tripTitle={tripTitle} setTripTitle={setTripTitle} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
             </Protected>
           }
-          /> */}
-          <Route element={<Dashboard tripTitle={tripTitle} setTripTitle={setTripTitle} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} path='/dashboard/:userId' />
+          />
+          {/* <Route element={<Dashboard tripTitle={tripTitle} setTripTitle={setTripTitle} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} path='/dashboard/:userId' />
           <Route element={<TripDashboard tripTitle={tripTitle} setTripTitle={setTripTitle} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} path='/dashboard/:userId/plan/:tripId' />
-          <Route element={<PlaceEditDash tripTitle={tripTitle} setTripTitle={setTripTitle} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} path='/dashboard/:userId/plan/:tripId/:placeId' />
-          <Route element={<LoginReg />} path='/' />
-          <Route element={<Dashboard tripTitle={tripTitle} setTripTitle={setTripTitle}/>} path='/dashboard/:userId' />
-          <Route element={<TripDashboard tripTitle={tripTitle} setTripTitle={setTripTitle}/>} path='/dashboard/:userId/plan/:tripId' />
-          <Route element={<PlaceEditDash tripTitle={tripTitle} setTripTitle={setTripTitle}/>} path='/dashboard/:userId/plan/:tripId/:placeId' />
-          <Route element={<UsersTrips tripTitle={tripTitle} setTripTitle={setTripTitle}/>} path=':userId/trips' />
+          <Route element={<PlaceEditDash tripTitle={tripTitle} setTripTitle={setTripTitle} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} path='/dashboard/:userId/plan/:tripId/:placeId' /> */}
         </Routes>
       </BrowserRouter>
     </div>

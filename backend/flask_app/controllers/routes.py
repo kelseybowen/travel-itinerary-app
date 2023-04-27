@@ -77,7 +77,7 @@ def login():
         }
         print(f'THIS WORKS --------{response}')
         return jsonify(response)
-    
+    print("WE MADE IT")
     session['user_id'] = result.id
     session['first_name'] = result.first_name
     session['interests'] = result.interests
