@@ -23,6 +23,12 @@ const RegForm = (props) => {
 
     const regValidator = () => {
         let isValid = true;
+        setFNameError("")
+        setLNameError("")
+        setEmailError("")
+        setPwError("")
+        setConfPwError("")
+        setInterestsError("")
         if (firstName.length < 3) {
             setFNameError("First Name must be at least 3 characters.")
             isValid = false;
@@ -31,53 +37,52 @@ const RegForm = (props) => {
             setLNameError("Last Name must be at least 3 characters.")
             isValid = false;
         }
-        // if (email ???)
-        // if (pw ???)
+        // if (email in use)
+        // if (wrong pw)
+        // if (pw's don't match)
+
         if (interests.length < 3) {
             setInterestsError("Interests must be at least 3 characters.")
             isValid = false;
         }
+        return isValid;
     }
 
 
     const handleRegistration = (e) => {
         e.preventDefault();
-        // console.log(messages)
-
-        // setMessages([])
         if (regValidator()) {
+            axios.post("http://localhost:5000/register/user", { first_name: firstName, last_name: lastName, email: email, password: password, conf_password: confirmPassword, interests: interests })
+                .then((res) => {
+                    console.log(res)
+                    let result = res.data['success']
+                    setIsLoggedIn(result)
+                    setFNameError("")
+                    setLNameError("")
+                    setEmailError("")
+                    setPwError("")
+                    setConfPwError("")
+                    setInterestsError("")
+                    if (result) {
+                        navigate("/dashboard/" + res.data['user'])
+                    }
+                    // } else {
+                    //     const stuff = res.data['messages']
+                    //     for (let m in stuff) {
+                    //         console.log(stuff[m])
+                    //         setMessages([...messages, stuff[m]])
+                    //     }
+                    //     console.log(messages)
+                    //     // console.log(message)
+                    // }
 
-        
-        axios.post("http://localhost:5000/register/user", { first_name: firstName, last_name: lastName, email: email, password: password, conf_password: confirmPassword, interests: interests })
-
-            .then((res) => {
-                // console.log(`MESSAGES = ${res.data['messages'][1]}`)
-
-                let result = res.data['success']
-                setIsLoggedIn(result)
-                if (result) {
-                    navigate("/dashboard/" + res.data['user'])
-                }
-                // } else {
-                //     const stuff = res.data['messages']
-                //     for (let m in stuff) {
-                //         console.log(stuff[m])
-                //         setMessages([...messages, stuff[m]])
-                //     }
-                //     console.log(messages)
-                //     // console.log(message)
-                // }
-
-                // if (res.data.success) {
-                //     setIsLoggedIn(true)
-                //     window.location.href = ("/dashboard/" + res.data.user)
-                // }
-            })
-            .catch(err => console.log(err))
-
-        setPassword("")
-        setConfirmPassword("")
-    }
+                    // if (res.data.success) {
+                    //     setIsLoggedIn(true)
+                    //     window.location.href = ("/dashboard/" + res.data.user)
+                    // }
+                })
+                .catch(err => console.log(err))
+        }
     }
 
 
@@ -91,9 +96,11 @@ const RegForm = (props) => {
                         )
                     )
                 } */}
+                <p className="text-danger">{fNameError}</p>
+
+                <p className="text-danger">{lNameError}</p>
                 <div className="form-group">
                     <label className='form-label' htmlFor="first_name">First Name</label>
-                    <p className="text-danger">{fNameError}</p>
                     <input className='form-control' type="text" name='first_name' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                 </div>
                 <div className="form-group">
@@ -102,18 +109,22 @@ const RegForm = (props) => {
                 </div>
                 <div className="form-group">
                     <label className='form-label' htmlFor="email">Email</label>
+                    <p className="text-danger">{emailError}</p>
                     <input className='form-control' type="text" name='email' value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className="form-group">
                     <label className='form-label' htmlFor="password">Password</label>
+                    <p className="text-danger">{pwError}</p>
                     <input className='form-control' type="password" name='password' value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div className="form-group">
                     <label className='form-label' htmlFor="conf_password">Confirm Password</label>
+                    <p className="text-danger">{confPwError}</p>
                     <input className='form-control' type="password" name='conf_password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                 </div>
                 <div className="form-group">
                     <label className='form-label' htmlFor="interests">Interests</label>
+                    <p className="text-danger">{interestsError}</p>
                     <input className='form-control' type="text" name='interests' value={interests} onChange={(e) => setInterests(e.target.value)} />
                 </div>
                 <div className="form-group text-center mt-3">
