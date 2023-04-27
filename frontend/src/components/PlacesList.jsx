@@ -5,14 +5,14 @@ import axios from 'axios';
 const PlacesList = (props) => {
 
     const {userId, tripId} = useParams();
-    const {tripData, setTripData, placeData, setPlaceData, isEdit, setIsEdit, setHeading, setButtonText} = props;
+    const {tripData, setTripData, placeData, setPlaceData} = props;
     const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(`http://localhost:5000/dashboard/${userId}/plan/${tripId}`)
             .then(res => {
                 console.log(res.data.data)
-                // setTripData(res.data)
+                setTripData(res.data)
             })
             .catch(err => console.log(err))
     }, [])

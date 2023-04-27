@@ -11,14 +11,13 @@ import Test from './views/Test';
 function App() {
 
   const [tripTitle, setTripTitle] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
     <div>
       <BrowserRouter>
         <Routes>
           <Route element={<LoginReg isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} path='/' />
-          {/* <Route element={<Test/>} path='/test' /> */}
           <Route path='/dashboard/:userId' element={
             <Protected isLoggedIn={isLoggedIn}>
               <Dashboard tripTitle={tripTitle} setTripTitle={setTripTitle} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>

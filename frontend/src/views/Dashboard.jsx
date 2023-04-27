@@ -11,7 +11,9 @@ const Dashboard = (props) => {
     const { userId } = useParams();
     const {tripTitle, setTripTitle, isLoggedIn, setIsLoggedIn} = props;
 
-    
+    useEffect(() => {
+        setIsLoggedIn(true)
+    }, [])
 
     return (
 
